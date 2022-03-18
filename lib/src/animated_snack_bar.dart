@@ -20,6 +20,12 @@ class AnimatedSnackBar extends StatefulWidget {
   final AnimatedSnackBarThemeData? infoTheme;
   final AnimatedSnackBarThemeData? warningTheme;
 
+  static AnimatedSnackBarState of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<_AnimatedSnackBarScope>()!
+        ._animatedSnackBarState;
+  }
+
   @override
   State<AnimatedSnackBar> createState() => AnimatedSnackBarState();
 }
@@ -31,6 +37,8 @@ class AnimatedSnackBarState extends State<AnimatedSnackBar> {
   late final AnimatedSnackBarThemeData successTheme;
   late final AnimatedSnackBarThemeData infoTheme;
   late final AnimatedSnackBarThemeData warningTheme;
+
+  final GlobalKey<OverlayState> overlayKey = GlobalKey<OverlayState>();
 
   final List<OverlayEntry> previousOverlays = List.empty(growable: true);
 
@@ -71,21 +79,25 @@ class AnimatedSnackBarState extends State<AnimatedSnackBar> {
     VoidCallback? onTap,
   }) async {}
 
-  Future<void> showSnackBar({
+  Future<void> showSnackBar(
+    BuildContext context, {
     Duration? duration,
   }) async {
     duration = duration ?? const Duration(seconds: 8);
 
     final OverlayEntry overlayEntry = OverlayEntry(
-      builder: (context) => _RawAnimatedSnackBar(
+      builder: (_) => _RawAnimatedSnackBar(
+        context: context,
         duration: duration!,
         child: const Text('Hi'),
-        pushAlignment: Alignment.topCenter,
+        top: 50,
+        left: 35,
+        right: 35,
       ),
     );
 
     WidgetsBinding.instance!.addPostFrameCallback(
-      (_) => Overlay.of(context)!.insert(overlayEntry),
+      (_) => overlayKey.currentState!.insert(overlayEntry),
     );
 
     // if (previousOverlay != null && previousOverlay!.mounted) {
@@ -95,6 +107,8 @@ class AnimatedSnackBarState extends State<AnimatedSnackBar> {
 
     await Future.delayed(duration);
 
+    overlayEntry.remove();
+
     // if (previousOverlay != null && previousOverlay!.mounted) {
     //   previousOverlay?.remove();
     //   previousOverlay = null;
@@ -103,29 +117,80 @@ class AnimatedSnackBarState extends State<AnimatedSnackBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: _AnimatedSnackBarScope(
+        animatedSnackBarState: this,
+        child: Overlay(
+          key: overlayKey,
+          initialEntries: [
+            OverlayEntry(builder: (context) => widget.child),
+          ],
+        ),
+      ),
+    );
   }
+}
+
+class _AnimatedSnackBarScope extends InheritedWidget {
+  const _AnimatedSnackBarScope({
+    Key? key,
+    required Widget child,
+    required AnimatedSnackBarState animatedSnackBarState,
+  })  : _animatedSnackBarState = animatedSnackBarState,
+        super(key: key, child: child);
+
+  final AnimatedSnackBarState _animatedSnackBarState;
+
+  @override
+  bool updateShouldNotify(_AnimatedSnackBarScope old) =>
+      _animatedSnackBarState != old._animatedSnackBarState;
 }
 
 class _RawAnimatedSnackBar extends StatefulWidget {
   const _RawAnimatedSnackBar({
     Key? key,
     required this.duration,
-    required this.pushAlignment,
     required this.child,
+    required this.context,
+    this.top,
+    this.bottom,
+    this.left,
+    this.right,
   }) : super(key: key);
 
   final Duration duration;
-  final Alignment pushAlignment;
   final Widget child;
+  final BuildContext context;
+  final double? top;
+  final double? bottom;
+  final double? left;
+  final double? right;
 
   @override
   State<_RawAnimatedSnackBar> createState() => _RawAnimatedSnackBarState();
 }
 
-class _RawAnimatedSnackBarState extends State<_RawAnimatedSnackBar> {
+class _RawAnimatedSnackBarState extends State<_RawAnimatedSnackBar>
+    with SingleTickerProviderStateMixin {
   bool isVisible = false;
   double offset = 50;
+  bool shouldRemoveOnScaleEnd = false;
+
+  late double? top = widget.top;
+  late double? bottom = widget.bottom;
+  late double? right = widget.right;
+  late double? left = widget.left;
+
+  final GlobalKey positionedKey = GlobalKey();
+
+  @override
+  BuildContext get context => widget.context;
+
+  late final AnimationController animController = AnimationController(
+    duration: const Duration(milliseconds: 100),
+    vsync: this,
+  );
 
   @override
   void initState() {
@@ -147,35 +212,101 @@ class _RawAnimatedSnackBarState extends State<_RawAnimatedSnackBar> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final double? top =
-        widget.pushAlignment.y < 0 ? (isVisible ? offset : -100) : null;
-    final double? bottom =
-        widget.pushAlignment.y > 0 ? (isVisible ? offset : -100) : null;
-    final double? left =
-        widget.pushAlignment.x < 0 ? (isVisible ? offset : -100) : 10;
-    final double? right =
-        widget.pushAlignment.x > 0 ? (isVisible ? offset : -100) : 10;
+  Widget build(BuildContext _) {
 
     return AnimatedPositioned(
+      key: positionedKey,
       duration: const Duration(milliseconds: 100),
-      top: top,
-      bottom: bottom,
-      left: left,
-      right: right,
-      child: GestureDetector(
-        onVerticalDragUpdate: (i) {
-          if (i.globalPosition.dy < 120) {
-            setState(() => offset = i.globalPosition.dy);
-          }
-          log(i.globalPosition.toString());
+      top: isVisible ? top : (top == null ? null : -100),
+      bottom: isVisible ? bottom : (bottom == null ? null : -100),
+      left: isVisible ? left : (left == null ? null : -100),
+      right: isVisible ? right : (right == null ? null : -100),
+      child: AnimatedBuilder(
+        animation: animController,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: 1 + (animController.value * .1),
+            child: child,
+          );
         },
-        child: AnimatedOpacity(
-          opacity: isVisible ? .9 : .3,
-          duration: const Duration(milliseconds: 1000),
-          child: const Material(
-            color: Colors.transparent,
-          ),
+        child: MediaQuery(
+          data: const MediaQueryData(),
+          child: Builder(builder: (context) {
+            return GestureDetector(
+              onScaleStart: (i) {
+                animController.forward();
+              },
+              onScaleEnd: (i) {
+                animController.reverse();
+              },
+              onScaleUpdate: (i) {
+                final del = i.focalPointDelta;
+                final newTop = top! + del.dy;
+                if (newTop < 150) {
+                  if (top != null) {
+                    top = top! + del.dy;
+                  } else if (bottom != null) {
+                    bottom = bottom! + del.dy;
+                  }
+                  if (left != null) {
+                    left = left! + del.dx;
+                  }
+                  if (right != null) {
+                    right = right! - del.dx;
+                  }
+                  log(MediaQuery.of(context).viewPadding.top.toString());
+                  if (i.focalPoint.dy <
+                      MediaQuery.of(context).viewPadding.top) {
+                    animController.reverse();
+                    top = -100;
+                  } else {
+                    animController.forward();
+                  }
+
+                  // TODO(sajad): implement making box small when
+                  // dragging it to sides of screen
+
+                  setState(() {});
+                }
+                log(i.toString());
+              },
+              // onHorizontalDragUpdate: (i) {
+              //   if (left != null) {
+              //     left = left! + del.dx;
+              //   } else if (right != null) {
+              //     right = right! + del.dx;
+              //   }
+
+              //   setState(() {});
+              // },
+              // onDrag
+              // onVerticalDragUpdate: (i) {
+              //   final localP = i.localPosition;
+              //   final del = i.delta;
+              //   if (top != null) {
+              //     top = top! + del.dy;
+              //   } else if (bottom != null) {
+              //     bottom = bottom! + del.dy;
+              //   }
+
+              //   setState(() {});
+              //   log('Global: ' + i.globalPosition.toString());
+              //   log('Local: ' + i.localPosition.toString());
+              // },
+              child: AnimatedOpacity(
+                opacity: isVisible ? .9 : .3,
+                duration: const Duration(milliseconds: 1000),
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    color: Colors.amber,
+                    height: 100,
+                  ),
+                ),
+              ),
+            );
+          }),
         ),
       ),
     );
