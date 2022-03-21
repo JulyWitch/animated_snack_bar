@@ -30,42 +30,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-
-    AnimatedSnackBar.info(
-      messageText: 'This is a info message as da sdasdasd asd as dasd asd asd asdas ',
-    ).show(context);
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            ElevatedButton(
+              onPressed: () {
+                AnimatedSnackBar.error(messageText: 'This is a error text')
+                    .show(context);
+              },
+              child: const Text("Error"),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            ElevatedButton(
+              onPressed: () {
+                AnimatedSnackBar.info(messageText: 'This is a info text')
+                    .show(context);
+              },
+              child: const Text("Info"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                AnimatedSnackBar.warning(messageText: 'This is a warning text')
+                    .show(context);
+              },
+              child: const Text("Warning"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                AnimatedSnackBar.success(messageText: 'This is a success text')
+                    .show(context);
+              },
+              child: const Text("Success"),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
