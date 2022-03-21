@@ -6,6 +6,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
       required this.duration,
       required this.child,
       required this.onRemoved,
+       this.borderRadius,
       this.backgroundColor})
       : super(key: key);
 
@@ -13,6 +14,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
   final Widget child;
   final VoidCallback onRemoved;
   final Color? backgroundColor;
+  final BorderRadius? borderRadius;
 
   @override
   State<RawAnimatedSnackBar> createState() => RawAnimatedSnackBarState();
@@ -75,10 +77,12 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
         duration: const Duration(milliseconds: 1000),
         child: Material(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: widget.borderRadius,
           child: Container(
-            color: widget.backgroundColor,
-            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: widget.borderRadius,
+              color: widget.backgroundColor,
+            ),
             child: widget.child,
           ),
         ),

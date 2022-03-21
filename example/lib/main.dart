@@ -34,7 +34,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
 
-    AnimatedSnackBar.info().show(context);
+    AnimatedSnackBar.info(
+      messageText: 'This is a info message as da sdasdasd asd as dasd asd asd asdas ',
+    ).show(context);
     setState(() {
       _counter++;
     });
