@@ -1,7 +1,8 @@
 name: animated_snack_bar
 description: A new Flutter package project.
-version: 0.0.1
-homepage:
+version: 0.1.0
+homepage: https://viracode.ir/
+repository: https://github.com/JulyWitch/animated_snack_bar
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
