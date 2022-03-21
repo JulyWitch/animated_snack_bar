@@ -10,11 +10,8 @@ showAnimatedSnackBar(BuildContext context, {Duration? duration}) async {
       onRemoved: () {
         entry.remove();
       },
-      isDraggable: false,
       child: const Text('Hi'),
-      top: 50,
-      left: 35,
-      right: 35,
+      backgroundColor: Colors.white.withOpacity(.8)
     ),
   );
   WidgetsBinding.instance!.addPostFrameCallback(
@@ -23,49 +20,30 @@ showAnimatedSnackBar(BuildContext context, {Duration? duration}) async {
 }
 
 class _RawAnimatedSnackBar extends StatefulWidget {
-  const _RawAnimatedSnackBar({
-    Key? key,
-    required this.duration,
-    required this.child,
-    required this.isDraggable,
-    required this.onRemoved,
-    this.top,
-    this.left,
-    this.right,
-  }) : super(key: key);
+  const _RawAnimatedSnackBar(
+      {Key? key,
+      required this.duration,
+      required this.child,
+      required this.onRemoved,
+      this.backgroundColor})
+      : super(key: key);
 
   final Duration duration;
   final Widget child;
-  final bool isDraggable;
-  final double? top;
-  final double? left;
-  final double? right;
   final VoidCallback onRemoved;
+  final Color? backgroundColor;
 
   @override
   State<_RawAnimatedSnackBar> createState() => _RawAnimatedSnackBarState();
 }
 
-class _RawAnimatedSnackBarState extends State<_RawAnimatedSnackBar>
-    with SingleTickerProviderStateMixin {
+class _RawAnimatedSnackBarState extends State<_RawAnimatedSnackBar> {
   bool isVisible = false;
-  bool isMoving = false;
-  double offset = 50;
-  bool shouldRemoveOnScaleEnd = false;
   bool removed = false;
-
-  late double? top = widget.top;
-  late double? right = widget.right;
-  late double? left = widget.left;
 
   final duration = const Duration(milliseconds: 400);
 
   final GlobalKey positionedKey = GlobalKey();
-
-  late final AnimationController animController = AnimationController(
-    duration: const Duration(milliseconds: 100),
-    vsync: this,
-  );
 
   void remove() {
     if (mounted && removed == false) {
@@ -86,12 +64,10 @@ class _RawAnimatedSnackBarState extends State<_RawAnimatedSnackBar>
     Future.delayed(
       Duration(milliseconds: widget.duration.inMilliseconds - 2000),
       () {
-        if (mounted && isMoving == false) {
+        if (mounted) {
           setState(() => isVisible = false);
           Future.delayed(const Duration(seconds: 2), () {
-            if (isMoving == false) {
-              remove();
-            }
+            remove();
           });
         }
       },
@@ -102,7 +78,6 @@ class _RawAnimatedSnackBarState extends State<_RawAnimatedSnackBar>
 
   @override
   void dispose() {
-    animController.dispose();
     super.dispose();
   }
 
@@ -110,98 +85,20 @@ class _RawAnimatedSnackBarState extends State<_RawAnimatedSnackBar>
   Widget build(BuildContext context) {
     return AnimatedPositioned(
       key: positionedKey,
-      duration: isMoving ? const Duration(milliseconds: 0) : duration,
-      top: isVisible ? top : (top == null ? null : -100),
-      left: left,
-      right: right,
-      child: AnimatedBuilder(
-        animation: animController,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: 1 + (animController.value * .1),
-            child: child,
-          );
-        },
-        child: GestureDetector(
-          onScaleStart: (i) {
-            if (widget.isDraggable) {
-              isMoving = true;
-              animController.forward();
-            }
-          },
-          onScaleEnd: (i) {
-            if (widget.isDraggable) {
-              isMoving = false;
-              animController.reverse();
-            }
-          },
-          onScaleUpdate: (i) {
-            if (widget.isDraggable) {
-              final del = i.focalPointDelta;
-              final newTop = top! + del.dy;
-              if (newTop < 150) {
-                if (top != null) {
-                  top = top! + del.dy;
-                }
-                if (left != null) {
-                  left = left! + del.dx;
-                }
-                if (right != null) {
-                  right = right! - del.dx;
-                }
-                if (i.focalPoint.dy <
-                    MediaQuery.of(context).viewPadding.top + 10) {
-                  animController.reverse();
-                  top = -100;
-                  Future.delayed(duration, () {
-                    remove();
-                  });
-                } else {
-                  animController.forward();
-                }
-
-                // TODO(sajad): implement making box small when
-                // dragging it to sides of screen
-
-                setState(() {});
-              }
-            }
-            // log(i.toString());
-          },
-          // onHorizontalDragUpdate: (i) {
-          //   if (left != null) {
-          //     left = left! + del.dx;
-          //   } else if (right != null) {
-          //     right = right! + del.dx;
-          //   }
-
-          //   setState(() {});
-          // },
-          // onDrag
-          // onVerticalDragUpdate: (i) {
-          //   final localP = i.localPosition;
-          //   final del = i.delta;
-          //   if (top != null) {
-          //     top = top! + del.dy;
-          //   } else if (bottom != null) {
-          //     bottom = bottom! + del.dy;
-          //   }
-
-          //   setState(() {});
-          //   log('Global: ' + i.globalPosition.toString());
-          //   log('Local: ' + i.localPosition.toString());
-          // },
-          child: AnimatedOpacity(
-            opacity: isVisible ? .9 : .3,
-            duration: const Duration(milliseconds: 1000),
-            child: Material(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                color: Colors.amber,
-                height: 100,
-              ),
-            ),
+      duration: duration,
+      top: isVisible ? 70 : -100,
+      left: 35,
+      right: 35,
+      child: AnimatedOpacity(
+        opacity: isVisible ? 1 : .3,
+        duration: const Duration(milliseconds: 1000),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            color: widget.backgroundColor,
+            height: 100,
+            child: widget.child,
           ),
         ),
       ),
