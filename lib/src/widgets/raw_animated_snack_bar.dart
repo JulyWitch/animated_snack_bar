@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 
 class RawAnimatedSnackBar extends StatefulWidget {
-  const RawAnimatedSnackBar(
-      {Key? key,
-      required this.duration,
-      required this.child,
-      required this.onRemoved,
-       this.borderRadius,
-      this.backgroundColor})
-      : super(key: key);
+  const RawAnimatedSnackBar({
+    Key? key,
+    required this.duration,
+    required this.child,
+    required this.onRemoved,
+  }) : super(key: key);
 
   final Duration duration;
   final Widget child;
   final VoidCallback onRemoved;
-  final Color? backgroundColor;
-  final BorderRadius? borderRadius;
 
   @override
   State<RawAnimatedSnackBar> createState() => RawAnimatedSnackBarState();
@@ -74,7 +70,6 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
       right: 35,
       child: Material(
         color: Colors.transparent,
-        borderRadius: widget.borderRadius,
         child: widget.child,
       ),
     );

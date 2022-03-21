@@ -43,32 +43,77 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                AnimatedSnackBar.error(messageText: 'This is a error text')
-                    .show(context);
-              },
-              child: const Text("Error"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                AnimatedSnackBar.info(messageText: 'This is a info text')
-                    .show(context);
+                AnimatedSnackBar.material(
+                  'This a snackbar with info type',
+                  type: AnimatedSnackBarType.info,
+                ).show(context);
               },
               child: const Text("Info"),
             ),
             ElevatedButton(
               onPressed: () {
-                AnimatedSnackBar.warning(messageText: 'This is a warning text')
-                    .show(context);
+                AnimatedSnackBar.material(
+                  'This a snackbar with error type',
+                  type: AnimatedSnackBarType.error,
+                ).show(context);
+              },
+              child: const Text("Error"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                AnimatedSnackBar.material(
+                  'This a snackbar with success type',
+                  type: AnimatedSnackBarType.success,
+                ).show(context);
+              },
+              child: const Text("Success"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                AnimatedSnackBar.material(
+                  'This a snackbar with warning type',
+                  type: AnimatedSnackBarType.warning,
+                ).show(context);
               },
               child: const Text("Warning"),
             ),
             ElevatedButton(
               onPressed: () {
-                AnimatedSnackBar.success(messageText: 'This is a success text')
-                    .show(context);
+                AnimatedSnackBar(
+                  builder: ((context) {
+                    return Container(
+                      padding: const EdgeInsets.all(8),
+                      color: Colors.amber,
+                      height: 50,
+                      child: const Text('A custom snackbar'),
+                    );
+                  }),
+                ).show(context);
               },
-              child: const Text("Success"),
+              child: const Text("Custom"),
             ),
+
+            // ElevatedButton(
+            //   onPressed: () {
+            //     AnimatedSnackBar.info(messageText: 'This is a info text')
+            //         .show(context);
+            //   },
+            //   child: const Text("Info"),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     AnimatedSnackBar.warning(messageText: 'This is a warning text')
+            //         .show(context);
+            //   },
+            //   child: const Text("Warning"),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     AnimatedSnackBar.success(messageText: 'This is a success text')
+            //         .show(context);
+            //   },
+            //   child: const Text("Success"),
+            // ),
           ],
         ),
       ),
