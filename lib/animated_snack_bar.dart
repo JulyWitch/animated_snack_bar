@@ -93,28 +93,34 @@ class AnimatedSnackBar {
             : Colors.black;
 
     final WidgetBuilder builder = ((context) {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Icon(
-              iconData,
-              color: foregroundColor,
-            ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Column(
-                children: [
-                  Text(
-                    messageText,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: foregroundColor,
-                        ),
-                  ),
-                ],
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          color: backgroundColor,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Icon(
+                iconData,
+                color: foregroundColor,
               ),
-            ),
-          ],
+              const SizedBox(width: 8),
+              Flexible(
+                child: Column(
+                  children: [
+                    Text(
+                      messageText,
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: foregroundColor,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       );
     });

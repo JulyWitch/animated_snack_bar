@@ -39,7 +39,7 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   @override
   void initState() {
     Future.delayed(
-      const Duration(milliseconds: 200),
+      const Duration(milliseconds: 100),
       () {
         setState(() => isVisible = true);
       },
@@ -72,20 +72,10 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
       top: isVisible ? 70 : -100,
       left: 35,
       right: 35,
-      child: AnimatedOpacity(
-        opacity: isVisible ? 1 : .3,
-        duration: const Duration(milliseconds: 1000),
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: widget.borderRadius,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: widget.borderRadius,
-              color: widget.backgroundColor,
-            ),
-            child: widget.child,
-          ),
-        ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: widget.borderRadius,
+        child: widget.child,
       ),
     );
   }
