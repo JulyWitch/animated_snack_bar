@@ -7,9 +7,13 @@ import 'widgets/raw_animated_snack_bar.dart';
 class AnimatedSnackBar {
   final Duration duration;
   final WidgetBuilder builder;
+  final MobileSnackBarPosition mobileSnackBarPosition;
+  final DesktopSnackBarPosition desktopSnackBarPosition;
 
   AnimatedSnackBar({
     this.duration = const Duration(seconds: 8),
+    this.mobileSnackBarPosition = MobileSnackBarPosition.top,
+    this.desktopSnackBarPosition = DesktopSnackBarPosition.bottomLeft,
     required this.builder,
   });
 
@@ -17,6 +21,8 @@ class AnimatedSnackBar {
     String messageText, {
     required AnimatedSnackBarType type,
     BorderRadius? borderRadius,
+    DesktopSnackBarPosition desktopSnackBarPosition = DesktopSnackBarPosition.bottomLeft,
+    MobileSnackBarPosition mobileSnackBarPosition = MobileSnackBarPosition.top,
     Duration duration = const Duration(seconds: 8),
   }) {
     final WidgetBuilder builder = ((context) {
@@ -30,6 +36,8 @@ class AnimatedSnackBar {
     return AnimatedSnackBar(
       duration: duration,
       builder: builder,
+      desktopSnackBarPosition: desktopSnackBarPosition,
+      mobileSnackBarPosition: mobileSnackBarPosition,
     );
   }
 
@@ -42,6 +50,8 @@ class AnimatedSnackBar {
         duration: duration,
         onRemoved: entry.remove,
         child: builder.call(context),
+        desktopSnackBarPosition: desktopSnackBarPosition,
+        mobileSnackBarPosition: mobileSnackBarPosition,
       ),
     );
 

@@ -47,6 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 AnimatedSnackBar.material(
                   'This a snackbar with info type',
                   type: AnimatedSnackBarType.info,
+                  mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                  desktopSnackBarPosition: DesktopSnackBarPosition.bottomLeft
                 ).show(context);
               },
               child: const Text("Info"),
@@ -56,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 AnimatedSnackBar.material(
                   'This a snackbar with error type',
                   type: AnimatedSnackBarType.error,
+                  desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
                 ).show(context);
               },
               child: const Text("Error"),
@@ -65,6 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 AnimatedSnackBar.material(
                   'This a snackbar with success type',
                   type: AnimatedSnackBarType.success,
+                  mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                  desktopSnackBarPosition: DesktopSnackBarPosition.topRight,
                 ).show(context);
               },
               child: const Text("Success"),
