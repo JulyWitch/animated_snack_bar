@@ -1,9 +1,12 @@
+# AnimatedSnackBar
+
 A Flutter package to show beautiful animated snackbars directly using overlay.
 
 ## Features
 
 - Material-UI snack bars
 
+![](https://github.com/JulyWitch/animated_snack_bar/blob/master/gifs/material.gif?raw=true)
 
 
 ## Getting started
