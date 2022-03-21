@@ -33,7 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    showAnimatedSnackBar(context, duration: const Duration(seconds: 4));
+
+    AnimatedSnackBar.info().show(context);
     setState(() {
       _counter++;
     });
