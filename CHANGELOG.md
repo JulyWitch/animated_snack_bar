@@ -3,10 +3,10 @@
 
 * Add: Determining snack bar position
 
-* Add: Web support (DesktopSnackBarPosition)
-
 * Add: ColorizedRectangle snack bars
+
+* Add: Dark Rectangle snack bars
 
 ## 0.1.0
 
-* Add: Material-UI snackbar.
+* Add: Material-UI snack bars
