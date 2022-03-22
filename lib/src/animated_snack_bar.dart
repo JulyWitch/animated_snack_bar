@@ -2,7 +2,7 @@ import 'package:animated_snack_bar/src/types.dart';
 import 'package:animated_snack_bar/src/widgets/material_animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/colorized_rectangle_animated_snack_bar.dart';
+import 'widgets/rectangle_animated_snack_bar.dart';
 import 'widgets/raw_animated_snack_bar.dart';
 
 class AnimatedSnackBar {
@@ -43,7 +43,7 @@ class AnimatedSnackBar {
     );
   }
 
-  factory AnimatedSnackBar.colorizedRectangle(
+  factory AnimatedSnackBar.rectangle(
     String titleText,
     String messageText, {
     required AnimatedSnackBarType type,
@@ -54,7 +54,7 @@ class AnimatedSnackBar {
     Brightness? brightness,
   }) {
     final WidgetBuilder builder = ((context) {
-      return ColorizedRectangleAnimatedSnackBar(
+      return RectangleAnimatedSnackBar(
         titleText: titleText,
         messageText: messageText,
         type: type,

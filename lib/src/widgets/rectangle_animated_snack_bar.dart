@@ -9,8 +9,8 @@ const _warningBackgroundColor = Color.fromRGBO(232, 145, 72, 1);
 
 const _darkColor = Color.fromRGBO(45, 45, 40, 1);
 
-class ColorizedRectangleAnimatedSnackBar extends StatelessWidget {
-  const ColorizedRectangleAnimatedSnackBar({
+class RectangleAnimatedSnackBar extends StatelessWidget {
+  const RectangleAnimatedSnackBar({
     Key? key,
     required this.titleText,
     required this.messageText,
