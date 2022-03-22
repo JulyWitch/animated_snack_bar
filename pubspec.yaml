@@ -1,7 +1,7 @@
 name: animated_snack_bar
-description: Easily show beautiful snack bars.
+description: Easily show beautiful snack bars directly using overlays.
 version: 0.1.0
-homepage: https://viracode.ir/
+homepage: https://github.com/JulyWitch
 repository: https://github.com/JulyWitch/animated_snack_bar
 
 environment:
