@@ -131,7 +131,6 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
         case DesktopSnackBarPosition.topRight:
           return 35;
 
-
         default:
           throw UnimplementedError();
       }

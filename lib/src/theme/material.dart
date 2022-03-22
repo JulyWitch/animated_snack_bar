@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-
 const _infoBackgroundColor = Color.fromRGBO(80, 147, 209, 1);
 const _errorBackgrounColor = Color.fromRGBO(255, 0, 0, 1);
 const _successBackgroundColor = Color.fromRGBO(99, 142, 90, 1);
 const _warningBackgroundColor = Color.fromRGBO(255, 205, 0, 1);
 
 final defaultBorderRadius = BorderRadius.circular(8);
-
 
 class MaterialSnackBarConfig {
   Widget icon;

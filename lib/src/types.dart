@@ -14,7 +14,4 @@ enum DesktopSnackBarPosition {
   bottomCenter,
 }
 
-enum MobileSnackBarPosition {
-  top,
-  bottom
-}
+enum MobileSnackBarPosition { top, bottom }

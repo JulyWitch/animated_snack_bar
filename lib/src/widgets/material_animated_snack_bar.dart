@@ -60,7 +60,6 @@ class MaterialAnimatedSnackBar extends StatelessWidget {
         throw UnimplementedError();
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
