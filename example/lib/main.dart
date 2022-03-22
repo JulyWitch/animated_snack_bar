@@ -44,12 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                AnimatedSnackBar.material(
-                  'This a snackbar with info type',
-                  type: AnimatedSnackBarType.info,
-                  mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-                  desktopSnackBarPosition: DesktopSnackBarPosition.bottomLeft
-                ).show(context);
+                AnimatedSnackBar.material('This a snackbar with info type',
+                        type: AnimatedSnackBarType.info,
+                        mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                        desktopSnackBarPosition:
+                            DesktopSnackBarPosition.bottomLeft)
+                    .show(context);
               },
               child: const Text("Info"),
             ),
@@ -98,6 +98,19 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text("Custom"),
             ),
+
+            ElevatedButton(
+                onPressed: (() {
+                  AnimatedSnackBar.colorizedRectangle(
+                    'Info',
+                    'This is an info snack bar',
+                    type: AnimatedSnackBarType.info,
+                    brightness: Brightness.light,
+                  ).show(
+                    context,
+                  );
+                }),
+                child: const Text("Colorized Info"))
 
             // ElevatedButton(
             //   onPressed: () {

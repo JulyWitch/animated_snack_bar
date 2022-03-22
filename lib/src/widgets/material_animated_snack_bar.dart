@@ -45,21 +45,22 @@ class MaterialAnimatedSnackBar extends StatelessWidget {
   IconData get iconData {
     switch (type) {
       case AnimatedSnackBarType.info:
-        return Icons.info;
+        return Icons.info_outline;
 
       case AnimatedSnackBarType.error:
-        return Icons.error;
+        return Icons.error_outline;
 
       case AnimatedSnackBarType.success:
         return Icons.done;
 
       case AnimatedSnackBarType.warning:
-        return Icons.warning;
+        return Icons.warning_amber_rounded;
 
       default:
         throw UnimplementedError();
     }
   }
+  
 
   @override
   Widget build(BuildContext context) {
