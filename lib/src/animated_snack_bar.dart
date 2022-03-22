@@ -5,10 +5,31 @@ import 'package:flutter/material.dart';
 import 'widgets/rectangle_animated_snack_bar.dart';
 import 'widgets/raw_animated_snack_bar.dart';
 
+/// A class to build and show snack bars.
+/// 
+/// You can use this class to create your
+/// custom snack bar using it's default constructor.
+/// 
+/// Or simply use one of factory methods 
+/// and pass your custom configs to them.
+/// 
+/// Remember to call [show] method after creating snack bars
+/// to show them..
 class AnimatedSnackBar {
+  /// Pass duration you want the snack bar to be visible for.
   final Duration duration;
+
+  /// Build your snack bar using this builder.
+  /// This will be passed to [RawAnimatedSnackBar]
+  /// and will be used to build your custom snack bar.
   final WidgetBuilder builder;
+
+  /// Determine which position you want the snack bar
+  /// to be displayed at for mobile.
   final MobileSnackBarPosition mobileSnackBarPosition;
+
+  /// Determine which position you want the snack bar
+  /// to be displayed at for web and desktop
   final DesktopSnackBarPosition desktopSnackBarPosition;
 
   AnimatedSnackBar({
@@ -18,6 +39,8 @@ class AnimatedSnackBar {
     required this.builder,
   });
 
+  /// Creates a material style snack bar.
+  /// Remember to call [show] method to show the snack bar.
   factory AnimatedSnackBar.material(
     String messageText, {
     required AnimatedSnackBarType type,
@@ -43,6 +66,9 @@ class AnimatedSnackBar {
     );
   }
 
+
+  /// Creates a rectangle style snack bar.
+  /// Remember to call [show] method to show the snack bar.
   factory AnimatedSnackBar.rectangle(
     String titleText,
     String messageText, {
@@ -70,6 +96,9 @@ class AnimatedSnackBar {
     );
   }
 
+
+  /// This method will create an overlay for your snack bar
+  /// and insert it to the overlay entries of navigator.
   Future<void> show(BuildContext context) async {
     final overlay = Navigator.of(context).overlay!;
     late OverlayEntry entry;
