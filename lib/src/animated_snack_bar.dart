@@ -6,13 +6,13 @@ import 'widgets/rectangle_animated_snack_bar.dart';
 import 'widgets/raw_animated_snack_bar.dart';
 
 /// A class to build and show snack bars.
-/// 
+///
 /// You can use this class to create your
 /// custom snack bar using it's default constructor.
-/// 
-/// Or simply use one of factory methods 
+///
+/// Or simply use one of factory methods
 /// and pass your custom configs to them.
-/// 
+///
 /// Remember to call [show] method after creating snack bars
 /// to show them..
 class AnimatedSnackBar {
@@ -66,7 +66,6 @@ class AnimatedSnackBar {
     );
   }
 
-
   /// Creates a rectangle style snack bar.
   /// Remember to call [show] method to show the snack bar.
   factory AnimatedSnackBar.rectangle(
@@ -95,7 +94,6 @@ class AnimatedSnackBar {
       mobileSnackBarPosition: mobileSnackBarPosition,
     );
   }
-
 
   /// This method will create an overlay for your snack bar
   /// and insert it to the overlay entries of navigator.

@@ -1,6 +1,5 @@
-
 /// Snack bar types for [AnimatedSnackBar]
-/// 
+///
 /// There will be a pre defined color and icon for each one of
 /// these.
 enum AnimatedSnackBarType {
