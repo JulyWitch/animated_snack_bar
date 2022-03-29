@@ -7,6 +7,8 @@
 
 * Add: Dark Rectangle snack bars
 
+* Add: New icon assets for future releases
+
 ## 0.1.0
 
 * Add: Material-UI snack bars
