@@ -1,4 +1,9 @@
 
+## 0.2.1
+
+* Fix: Readme images
+* Fix: Pubspec description length
+
 ## 0.2.0
 
 * Add: Determining snack bar position
