@@ -8,16 +8,16 @@ A Flutter package to show beautiful animated snackbars directly using overlay.
 
 ![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/material.gif?raw=true)
 
+<img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/material-info.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/material-success.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/material-warning.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/material-error.png" height="600">  
+
 - Colorized rectangle
 
-![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-info.png)
-![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-success.png)
-![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-warning.png)
 
+<img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-info.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-success.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-warning.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-error.png" height="600">  
 
 - Dark rectangle
 
-![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/dark-error.png)
+<img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/dark-info.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/dark-success.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/dark-warning.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/blob/master/files/dark-error.png" height="600">
 
 ## Getting started
 
