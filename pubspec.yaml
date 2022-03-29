@@ -1,6 +1,6 @@
 name: animated_snack_bar
 description: Easily show beautiful snack bars directly using overlays.
-version: 0.1.0
+version: 0.2.0
 homepage: https://github.com/JulyWitch
 repository: https://github.com/JulyWitch/animated_snack_bar
 
@@ -18,3 +18,6 @@ dev_dependencies:
   flutter_lints: ^1.0.0
 
 flutter:
+  assets:
+    - assets/regular/
+    - assets/monochrome/
