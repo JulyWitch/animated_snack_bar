@@ -4,10 +4,20 @@ A Flutter package to show beautiful animated snackbars directly using overlay.
 
 ## Features
 
-- Material-UI snack bars
+- Material-UI
 
-![](https://github.com/JulyWitch/animated_snack_bar/blob/master/gifs/material.gif?raw=true)
+![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/material.gif?raw=true)
 
+- Colorized rectangle
+
+![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-info.png)
+![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-success.png)
+![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/colorized-warning.png)
+
+
+- Dark rectangle
+
+![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/dark-error.png)
 
 ## Getting started
 
@@ -19,7 +29,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 ## Usage
 
-Show material ui snackbar
+* Show material ui snackbar
 
 ```dart
 AnimatedSnackBar.material(
@@ -28,7 +38,33 @@ AnimatedSnackBar.material(
 ).show(context);
 ```
 
-Show a custom snackbar
+* Show colorized rectangle snackbar
+
+```dart
+AnimatedSnackBar.rectangle(
+'Success',
+  'This is a success snack bar',
+  type: AnimatedSnackBarType.success,
+  brightness: Brightness.light,
+).show(
+  context,
+);
+```
+
+* Show dark rectangle snackbar
+
+```dart
+AnimatedSnackBar.rectangle(
+'Success',
+  'This is a success snack bar',
+  type: AnimatedSnackBarType.success,
+  brightness: Brightness.dark,
+).show(
+  context,
+);
+```
+
+* Show a custom snackbar
 
 ```dart
 AnimatedSnackBar(
