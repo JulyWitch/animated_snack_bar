@@ -21,6 +21,16 @@ A Flutter package to show beautiful animated snackbars directly using overlay.
 
 ## Getting started
 
+Add package to pubspec.yaml
+
+```yaml
+
+   dependencies:
+
+    animated_snack_bar: ^0.2.0
+
+
+```
 Import the package 
 
 ```dart
@@ -78,3 +88,14 @@ AnimatedSnackBar(
     }),
 ).show(context);
 ```
+
+* Changning snackbar pushing position
+```dart
+AnimatedSnackBar.material(
+    'This a snackbar with info type',
+    type: AnimatedSnackBarType.info,
+    mobileSnackBarPosition: MobileSnackBarPosition.bottom, // Position of snackbar on mobile devices
+    desktopSnackBarPosition: DesktopSnackBarPosition.topRight, // Position of snackbar on desktop devices
+).show(context);
+```
+
