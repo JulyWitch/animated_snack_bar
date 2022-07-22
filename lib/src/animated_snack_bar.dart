@@ -111,7 +111,7 @@ class AnimatedSnackBar {
       ),
     );
 
-    WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) => overlay.insert(entry),
     );
     await Future.delayed(duration);
