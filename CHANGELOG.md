@@ -1,4 +1,8 @@
 
+## 0.2.2
+
+* Fix: Flutter 3 compability
+
 ## 0.2.1
 
 * Fix: Readme images
