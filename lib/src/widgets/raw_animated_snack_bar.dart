@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 
+Duration _opacityDuration = const Duration(milliseconds: 400);
+
 class RawAnimatedSnackBar extends StatefulWidget {
   const RawAnimatedSnackBar({
     Key? key,
@@ -10,6 +12,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
     required this.onRemoved,
     required this.mobileSnackBarPosition,
     required this.desktopSnackBarPosition,
+    required this.getInitialDy,
   }) : super(key: key);
 
   final Duration duration;
@@ -17,6 +20,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
   final VoidCallback onRemoved;
   final MobileSnackBarPosition mobileSnackBarPosition;
   final DesktopSnackBarPosition desktopSnackBarPosition;
+  final double Function() getInitialDy;
 
   @override
   State<RawAnimatedSnackBar> createState() => RawAnimatedSnackBarState();
@@ -25,6 +29,8 @@ class RawAnimatedSnackBar extends StatefulWidget {
 class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   bool isVisible = false;
   bool removed = false;
+
+  double opacity = 1;
 
   final duration = const Duration(milliseconds: 400);
 
@@ -36,6 +42,12 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
     } else {
       removed = true;
     }
+  }
+
+  Future<void> fadeOut() {
+    opacity = 0;
+    setState(() {});
+    return Future.delayed(_opacityDuration);
   }
 
   @override
@@ -69,7 +81,7 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   double? get top {
     if (widget.mobileSnackBarPosition == MobileSnackBarPosition.top) {
       if (isVisible) {
-        return 70;
+        return 70 + widget.getInitialDy();
       } else {
         return -100;
       }
@@ -85,7 +97,7 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
       return null;
     } else if (widget.mobileSnackBarPosition == MobileSnackBarPosition.bottom) {
       if (isVisible) {
-        return 70;
+        return 70 + widget.getInitialDy();
       } else {
         return -100;
       }
@@ -157,10 +169,14 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
       left: left,
       right: right,
       bottom: bottom,
-      child: Center(
-        child: Material(
-          color: Colors.transparent,
-          child: widget.child,
+      child: AnimatedOpacity(
+        duration: _opacityDuration,
+        opacity: opacity,
+        child: Center(
+          child: Material(
+            color: Colors.transparent,
+            child: widget.child,
+          ),
         ),
       ),
     );

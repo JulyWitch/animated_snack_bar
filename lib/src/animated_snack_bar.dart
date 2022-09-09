@@ -1,9 +1,12 @@
-import 'package:animated_snack_bar/src/types.dart';
-import 'package:animated_snack_bar/src/widgets/material_animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/rectangle_animated_snack_bar.dart';
+import 'package:animated_snack_bar/src/types.dart';
+import 'package:animated_snack_bar/src/widgets/material_animated_snack_bar.dart';
+
 import 'widgets/raw_animated_snack_bar.dart';
+import 'widgets/rectangle_animated_snack_bar.dart';
+
+final List<AnimatedSnackBar> _snackBars = List.empty(growable: true);
 
 /// A class to build and show snack bars.
 ///
@@ -32,10 +35,15 @@ class AnimatedSnackBar {
   /// to be displayed at for web and desktop
   final DesktopSnackBarPosition desktopSnackBarPosition;
 
+  final MultipleSnackBarStrategy snackBarStrategy;
+
+  late final _SnackBarInfo info;
+
   AnimatedSnackBar({
     this.duration = const Duration(seconds: 8),
     this.mobileSnackBarPosition = MobileSnackBarPosition.top,
     this.desktopSnackBarPosition = DesktopSnackBarPosition.bottomLeft,
+    this.snackBarStrategy = const ColumnSnackBarStrategy(),
     required this.builder,
   });
 
@@ -49,6 +57,7 @@ class AnimatedSnackBar {
         DesktopSnackBarPosition.bottomLeft,
     MobileSnackBarPosition mobileSnackBarPosition = MobileSnackBarPosition.top,
     Duration duration = const Duration(seconds: 8),
+    MultipleSnackBarStrategy snackBarStrategy = const ColumnSnackBarStrategy(),
   }) {
     final WidgetBuilder builder = ((context) {
       return MaterialAnimatedSnackBar(
@@ -61,6 +70,7 @@ class AnimatedSnackBar {
     return AnimatedSnackBar(
       duration: duration,
       builder: builder,
+      snackBarStrategy: snackBarStrategy,
       desktopSnackBarPosition: desktopSnackBarPosition,
       mobileSnackBarPosition: mobileSnackBarPosition,
     );
@@ -77,6 +87,7 @@ class AnimatedSnackBar {
     MobileSnackBarPosition mobileSnackBarPosition = MobileSnackBarPosition.top,
     Duration duration = const Duration(seconds: 8),
     Brightness? brightness,
+    MultipleSnackBarStrategy snackBarStrategy = const ColumnSnackBarStrategy(),
   }) {
     final WidgetBuilder builder = ((context) {
       return RectangleAnimatedSnackBar(
@@ -89,31 +100,75 @@ class AnimatedSnackBar {
 
     return AnimatedSnackBar(
       duration: duration,
+      snackBarStrategy: snackBarStrategy,
       builder: builder,
       desktopSnackBarPosition: desktopSnackBarPosition,
       mobileSnackBarPosition: mobileSnackBarPosition,
     );
   }
 
+  void remove() {
+    if (!info.removed) {
+      info.removed = true;
+      info.entry.remove();
+    }
+  }
+
   /// This method will create an overlay for your snack bar
   /// and insert it to the overlay entries of navigator.
   Future<void> show(BuildContext context) async {
     final overlay = Navigator.of(context).overlay!;
-    late OverlayEntry entry;
 
-    entry = OverlayEntry(
+    info = _SnackBarInfo(
+      key: GlobalKey<RawAnimatedSnackBarState>(),
+      createdAt: DateTime.now(),
+    );
+
+    void remove() {
+      this.remove();
+      _snackBars.remove(this);
+    }
+
+    info.entry = OverlayEntry(
       builder: (_) => RawAnimatedSnackBar(
+        key: info.key,
+        getInitialDy: () => snackBarStrategy.computeDy(_snackBars, this),
         duration: duration,
-        onRemoved: entry.remove,
+        onRemoved: remove,
         child: builder.call(context),
         desktopSnackBarPosition: desktopSnackBarPosition,
         mobileSnackBarPosition: mobileSnackBarPosition,
       ),
     );
 
+    _snackBars.add(this);
+    snackBarStrategy.onAdd(_snackBars, this);
+
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => overlay.insert(entry),
+      (_) => overlay.insert(info.entry),
     );
     await Future.delayed(duration);
   }
+}
+
+class _SnackBarInfo {
+  late final OverlayEntry entry;
+  final GlobalKey<RawAnimatedSnackBarState> key;
+  final DateTime createdAt;
+  bool removed = false;
+
+  _SnackBarInfo({required this.key, required this.createdAt});
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is _SnackBarInfo &&
+        other.entry == entry &&
+        other.key == key &&
+        other.createdAt == createdAt;
+  }
+
+  @override
+  int get hashCode => entry.hashCode ^ key.hashCode ^ createdAt.hashCode;
 }
