@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   AnimatedSnackBar.material(
-                    'This a snackbar with info type and a very very very long text \n hahahha ah hah aahah ',
+                    'This a snackbar with info type and a very very very long text',
                     type: AnimatedSnackBarType.info,
                     mobileSnackBarPosition: MobileSnackBarPosition.bottom,
                     desktopSnackBarPosition: DesktopSnackBarPosition.bottomLeft,
