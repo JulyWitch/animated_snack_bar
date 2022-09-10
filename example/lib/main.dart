@@ -61,6 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   AnimatedSnackBar.material(
+                    'This a snackbar with info type and a very very very long text',
+                    type: AnimatedSnackBarType.info,
+                    mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+                    desktopSnackBarPosition: DesktopSnackBarPosition.bottomLeft,
+                    snackBarStrategy: RemoveSnackBarStrategy(),
+                  ).show(context);
+                },
+                child: const Text("Long Info"),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  AnimatedSnackBar.material(
                     'This a snackbar with error type',
                     type: AnimatedSnackBarType.error,
                     desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
