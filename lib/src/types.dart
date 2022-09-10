@@ -40,22 +40,36 @@ class ColumnSnackBarStrategy implements MultipleSnackBarStrategy {
 
   @override
   double computeDy(List<AnimatedSnackBar> snackBars, AnimatedSnackBar self) {
-    final olderBars = snackBars
-        .where(
-          (element) =>
-              element.info.key.currentState?.widget.desktopSnackBarPosition ==
-                  self.desktopSnackBarPosition &&
-              element.info.key.currentState!.isVisible &&
-              element.info.createdAt.isBefore(self.info.createdAt),
-        )
-        .toList();
+    final index = snackBars.indexWhere(
+      (element) => element.info.key.currentContext != null,
+    );
+    if (index != -1) {
+      bool isDesktop =
+          MediaQuery.of(snackBars[index].info.key.currentContext!).size.width >
+              600;
 
-    return olderBars.fold<double>(0, (initialValue, element) {
-      final box =
-          element.info.key.currentContext!.findRenderObject() as RenderBox;
+      final olderBars = snackBars
+          .where(
+            (element) =>
+                ((element.mobileSnackBarPosition ==
+                            self.mobileSnackBarPosition &&
+                        !isDesktop) ||
+                    (element.desktopSnackBarPosition ==
+                            self.desktopSnackBarPosition &&
+                        isDesktop)) &&
+                (element.info.key.currentState?.isVisible ?? false) &&
+                element.info.createdAt.isBefore(self.info.createdAt),
+          )
+          .toList();
 
-      return initialValue + box.size.height + gap;
-    });
+      return olderBars.fold<double>(0, (initialValue, element) {
+        final box =
+            element.info.key.currentContext!.findRenderObject() as RenderBox;
+
+        return initialValue + box.size.height + gap;
+      });
+    }
+    return 0;
   }
 
   @override
@@ -74,22 +88,35 @@ class RemoveSnackBarStrategy implements MultipleSnackBarStrategy {
   @override
   List<AnimatedSnackBar> onAdd(
       List<AnimatedSnackBar> snackBars, AnimatedSnackBar self) {
-    bool shouldRemove(AnimatedSnackBar element) =>
-        element.info.createdAt.isBefore(self.info.createdAt) &&
-        element.mobileSnackBarPosition == self.mobileSnackBarPosition &&
-        element.desktopSnackBarPosition == self.desktopSnackBarPosition;
+    final index = snackBars.indexWhere(
+      (element) => element.info.key.currentContext != null,
+    );
 
-    snackBars
-        .where(
-      shouldRemove,
-    )
-        .forEach((element) {
-      element.info.key.currentState!.fadeOut().then(
-            (value) => element.remove(),
-          );
-    });
+    if (index != -1) {
+      bool isDesktop =
+          MediaQuery.of(snackBars[index].info.key.currentContext!).size.width >
+              600;
+      bool shouldRemove(AnimatedSnackBar element) =>
+          element.info.createdAt.isBefore(self.info.createdAt) &&
+              (element.mobileSnackBarPosition == self.mobileSnackBarPosition &&
+                  !isDesktop) ||
+          (element.desktopSnackBarPosition == self.desktopSnackBarPosition &&
+              isDesktop);
 
-    snackBars.removeWhere(shouldRemove);
+      snackBars
+          .where(
+        shouldRemove,
+      )
+          .forEach((element) {
+        element.info.key.currentState!.fadeOut().then(
+              (value) => element.remove(),
+            );
+      });
+
+      snackBars.removeWhere(shouldRemove);
+
+      return snackBars;
+    }
 
     return snackBars;
   }
