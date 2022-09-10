@@ -1,4 +1,9 @@
 
+## 0.3.0
+
+* Add: MultipleSnackBarStrategy
+* Fix: Snack bar position in desktop
+
 ## 0.2.2
 
 * Fix: Flutter 3 compability
