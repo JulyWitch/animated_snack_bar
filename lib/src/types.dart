@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import '../animated_snack_bar.dart';
@@ -48,20 +49,21 @@ class ColumnSnackBarStrategy implements MultipleSnackBarStrategy {
           MediaQuery.of(snackBars[index].info.key.currentContext!).size.width >
               600;
 
-      final olderBars = snackBars
-          .where(
-            (element) =>
-                ((element.mobileSnackBarPosition ==
-                            self.mobileSnackBarPosition &&
-                        !isDesktop) ||
-                    (element.desktopSnackBarPosition ==
-                            self.desktopSnackBarPosition &&
-                        isDesktop)) &&
-                (element.info.key.currentState?.isVisible ?? false) &&
-                element.info.createdAt.isBefore(self.info.createdAt),
-          )
-          .toList();
+      final olderBars = snackBars.where(
+        (element) {
+          bool isMobileAndSamePosition =
+              (element.mobileSnackBarPosition == self.mobileSnackBarPosition &&
+                  !isDesktop);
+          bool isDesktopAndSamePosition = (element.desktopSnackBarPosition ==
+                  self.desktopSnackBarPosition &&
+              isDesktop);
 
+          return (isMobileAndSamePosition || isDesktopAndSamePosition) &&
+              (element.info.key.currentState?.isVisible ?? false) &&
+              element.info.createdAt.isBefore(self.info.createdAt);
+        },
+      ).toList();
+      
       return olderBars.fold<double>(0, (initialValue, element) {
         final box =
             element.info.key.currentContext!.findRenderObject() as RenderBox;
@@ -108,7 +110,7 @@ class RemoveSnackBarStrategy implements MultipleSnackBarStrategy {
         shouldRemove,
       )
           .forEach((element) {
-        element.info.key.currentState!.fadeOut().then(
+        element.info.key.currentState?.fadeOut().then(
               (value) => element.remove(),
             );
       });

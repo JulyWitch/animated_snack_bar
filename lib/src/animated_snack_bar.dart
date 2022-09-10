@@ -6,7 +6,7 @@ import 'package:animated_snack_bar/src/widgets/material_animated_snack_bar.dart'
 import 'widgets/raw_animated_snack_bar.dart';
 import 'widgets/rectangle_animated_snack_bar.dart';
 
-final List<AnimatedSnackBar> _snackBars = List.empty(growable: true);
+List<AnimatedSnackBar> _snackBars = List.empty(growable: true);
 
 /// A class to build and show snack bars.
 ///
@@ -142,11 +142,13 @@ class AnimatedSnackBar {
     );
 
     _snackBars.add(this);
-    snackBarStrategy.onAdd(_snackBars, this);
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => overlay.insert(info.entry),
     );
+
+    _snackBars = snackBarStrategy.onAdd(_snackBars, this);
+
     await Future.delayed(duration);
   }
 }
@@ -171,4 +173,10 @@ class _SnackBarInfo {
 
   @override
   int get hashCode => entry.hashCode ^ key.hashCode ^ createdAt.hashCode;
+}
+
+extension Cleaner on List<AnimatedSnackBar> {
+  List<AnimatedSnackBar> clean() {
+    return where((element) => element.info.key.currentState != null).toList();
+  }
 }
