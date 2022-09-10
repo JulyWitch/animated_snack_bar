@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 import '../animated_snack_bar.dart';
 
 /// Snack bar types for [AnimatedSnackBar]
-///
+
 /// There will be a pre defined color and icon for each one of
 /// these.
 enum AnimatedSnackBarType {
@@ -27,17 +26,28 @@ enum DesktopSnackBarPosition {
 /// Snack bar position on mobile devices (screens with width <= 600)
 enum MobileSnackBarPosition { top, bottom }
 
+/// A class to implement behaviour when having multiple snack bars
+/// at once,
+/// See
+///   [ColumnSnackBarStrategy]
+///   [RemoveSnackBarStrategy]
+///   [StackSnackBarStrategy]
+/// for implementation
 abstract class MultipleSnackBarStrategy {
   double computeDy(List<AnimatedSnackBar> snackBars, AnimatedSnackBar self);
   List<AnimatedSnackBar> onAdd(
       List<AnimatedSnackBar> snackBars, AnimatedSnackBar self);
 }
 
+/// This class will allow you to show multiple snack bars
+/// in a column format with a pre-defined gap between them.
 class ColumnSnackBarStrategy implements MultipleSnackBarStrategy {
+  /// Space between snackbars in the column
   final double gap;
-  final int maxSnackBars;
 
-  const ColumnSnackBarStrategy({this.gap = 8, this.maxSnackBars = 4});
+  const ColumnSnackBarStrategy({
+    this.gap = 8,
+  });
 
   @override
   double computeDy(List<AnimatedSnackBar> snackBars, AnimatedSnackBar self) {
@@ -63,7 +73,7 @@ class ColumnSnackBarStrategy implements MultipleSnackBarStrategy {
               element.info.createdAt.isBefore(self.info.createdAt);
         },
       ).toList();
-      
+
       return olderBars.fold<double>(0, (initialValue, element) {
         final box =
             element.info.key.currentContext!.findRenderObject() as RenderBox;
@@ -80,6 +90,9 @@ class ColumnSnackBarStrategy implements MultipleSnackBarStrategy {
     return snackBars;
   }
 }
+
+/// This class will help you when you want
+/// to remove past snackbars when a new one comes in
 
 class RemoveSnackBarStrategy implements MultipleSnackBarStrategy {
   @override
@@ -98,12 +111,17 @@ class RemoveSnackBarStrategy implements MultipleSnackBarStrategy {
       bool isDesktop =
           MediaQuery.of(snackBars[index].info.key.currentContext!).size.width >
               600;
-      bool shouldRemove(AnimatedSnackBar element) =>
-          element.info.createdAt.isBefore(self.info.createdAt) &&
-              (element.mobileSnackBarPosition == self.mobileSnackBarPosition &&
-                  !isDesktop) ||
-          (element.desktopSnackBarPosition == self.desktopSnackBarPosition &&
-              isDesktop);
+      bool shouldRemove(AnimatedSnackBar element) {
+        bool isMobileAndSamePosition =
+            (element.mobileSnackBarPosition == self.mobileSnackBarPosition &&
+                !isDesktop);
+        bool isDesktopAndSamePosition =
+            (element.desktopSnackBarPosition == self.desktopSnackBarPosition &&
+                isDesktop);
+
+        return element.info.createdAt.isBefore(self.info.createdAt) &&
+            (isMobileAndSamePosition || isDesktopAndSamePosition);
+      }
 
       snackBars
           .where(
@@ -124,6 +142,7 @@ class RemoveSnackBarStrategy implements MultipleSnackBarStrategy {
   }
 }
 
+/// This class will just stack the snackbars to each other
 class StackSnackBarStrategy implements MultipleSnackBarStrategy {
   @override
   double computeDy(List<AnimatedSnackBar> snackBars, AnimatedSnackBar self) {

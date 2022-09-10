@@ -35,6 +35,12 @@ class AnimatedSnackBar {
   /// to be displayed at for web and desktop
   final DesktopSnackBarPosition desktopSnackBarPosition;
 
+  /// Determine how it should handle snack bars befoer it,
+  /// Should it be shown on them like column? use [ColumnSnackBarStrategy]
+  /// Should it remove them? use [RemoveSnackBarStrategy]
+  /// Should it just stack on them? use [StackSnackBarStrategy]
+  /// 
+  /// Defaults to [ColumnSnackBarStrategy]
   final MultipleSnackBarStrategy snackBarStrategy;
 
   late final _SnackBarInfo info;
