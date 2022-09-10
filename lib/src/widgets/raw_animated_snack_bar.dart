@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -53,10 +52,6 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
 
   @override
   void initState() {
-    log('----');
-    log('widget.mobileSnackBarPosition: ${widget.mobileSnackBarPosition}');
-    log('widget.desktopSnackBarPosition: ${widget.desktopSnackBarPosition}');
-    log('----');
     Future.delayed(
       const Duration(milliseconds: 100),
       () {
