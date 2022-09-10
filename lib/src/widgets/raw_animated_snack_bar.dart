@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
@@ -39,7 +41,6 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   void remove() {
     if (mounted && removed == false) {
       widget.onRemoved();
-    } else {
       removed = true;
     }
   }
@@ -52,6 +53,10 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
 
   @override
   void initState() {
+    log('----');
+    log('widget.mobileSnackBarPosition: ${widget.mobileSnackBarPosition}');
+    log('widget.desktopSnackBarPosition: ${widget.desktopSnackBarPosition}');
+    log('----');
     Future.delayed(
       const Duration(milliseconds: 100),
       () {
@@ -79,30 +84,72 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   }
 
   double? get top {
-    if (widget.mobileSnackBarPosition == MobileSnackBarPosition.top) {
-      if (isVisible) {
-        return 70 + widget.getInitialDy();
-      } else {
-        return -100;
-      }
-    } else if (widget.mobileSnackBarPosition == MobileSnackBarPosition.bottom) {
-      return null;
-    }
+    if (isDesktop) {
+      switch (widget.desktopSnackBarPosition) {
+        case DesktopSnackBarPosition.topCenter:
+        case DesktopSnackBarPosition.topLeft:
+        case DesktopSnackBarPosition.topRight:
+          if (isVisible) {
+            return 70 + widget.getInitialDy();
+          } else {
+            return -100;
+          }
 
+        case DesktopSnackBarPosition.bottomRight:
+        case DesktopSnackBarPosition.bottomLeft:
+        case DesktopSnackBarPosition.bottomCenter:
+          return null;
+
+        default:
+          throw UnimplementedError();
+      }
+    } else {
+      if (widget.mobileSnackBarPosition == MobileSnackBarPosition.top) {
+        if (isVisible) {
+          return 70 + widget.getInitialDy();
+        } else {
+          return -100;
+        }
+      } else if (widget.mobileSnackBarPosition ==
+          MobileSnackBarPosition.bottom) {
+        return null;
+      }
+    }
     throw UnimplementedError();
   }
 
   double? get bottom {
-    if (widget.mobileSnackBarPosition == MobileSnackBarPosition.top) {
-      return null;
-    } else if (widget.mobileSnackBarPosition == MobileSnackBarPosition.bottom) {
-      if (isVisible) {
-        return 70 + widget.getInitialDy();
-      } else {
-        return -100;
+    if (isDesktop) {
+      switch (widget.desktopSnackBarPosition) {
+        case DesktopSnackBarPosition.topCenter:
+        case DesktopSnackBarPosition.topLeft:
+        case DesktopSnackBarPosition.topRight:
+          return null;
+
+        case DesktopSnackBarPosition.bottomRight:
+        case DesktopSnackBarPosition.bottomLeft:
+        case DesktopSnackBarPosition.bottomCenter:
+          if (isVisible) {
+            return 70 + widget.getInitialDy();
+          } else {
+            return -100;
+          }
+
+        default:
+          throw UnimplementedError();
+      }
+    } else {
+      if (widget.mobileSnackBarPosition == MobileSnackBarPosition.top) {
+        return null;
+      } else if (widget.mobileSnackBarPosition ==
+          MobileSnackBarPosition.bottom) {
+        if (isVisible) {
+          return 70 + widget.getInitialDy();
+        } else {
+          return -100;
+        }
       }
     }
-
     throw UnimplementedError();
   }
 
