@@ -22,13 +22,8 @@ A Flutter package to show beautiful animated snackbars directly using overlay.
 
 Add package to pubspec.yaml
 
-```yaml
-
-   dependencies:
-
-    animated_snack_bar: ^0.2.0
-
-
+```bash
+flutter pub add animated_snack_bar
 ```
 Import the package 
 
@@ -98,3 +93,10 @@ AnimatedSnackBar.material(
 ).show(context);
 ```
 
+### Multiple snack bars handling
+
+You can pass `snackBarStrategy` as a paramter to determine what should snack bar do
+with snackbars which came before it.
+- Should it be shown on them like column? use `ColumnSnackBarStrategy`
+- Should it remove them? use `RemoveSnackBarStrategy`
+- Should it just stack on them? use `StackSnackBarStrategy`
