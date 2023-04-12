@@ -81,6 +81,25 @@ AnimatedSnackBar(
 ).show(context);
 ```
 
+* Show a custom snackbar with MaterialAnimatedSnackBar content
+
+```dart
+AnimatedSnackBar(
+  builder: ((context) {
+    return const MaterialAnimatedSnackBar(
+      titleText: 'Custom material snackbar ',
+      messageText:
+          'This a custom material snackbar with info type',
+      type: AnimatedSnackBarType.info,
+      foregroundColor: Colors.amber,
+      titleTextStyle: TextStyle(
+        color: Colors.brown,
+      ),
+    );
+  }),
+).show(context);
+```
+
 * Changning snackbar pushing position
 ```dart
 AnimatedSnackBar.material(

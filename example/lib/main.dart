@@ -116,6 +116,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   AnimatedSnackBar(
                     builder: ((context) {
+                      return const MaterialAnimatedSnackBar(
+                        titleText: 'Custom material snackbar ',
+                        messageText:
+                            'This a custom material snackbar with info type',
+                        type: AnimatedSnackBarType.info,
+                        foregroundColor: Colors.amber,
+                        titleTextStyle: TextStyle(
+                          color: Colors.brown,
+                        ),
+                      );
+                    }),
+                  ).show(context);
+                },
+                child: const Text("Custom Material"),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  AnimatedSnackBar(
+                    builder: ((context) {
                       return Container(
                         padding: const EdgeInsets.all(8),
                         color: Colors.amber,
