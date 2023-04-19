@@ -1,17 +1,17 @@
 class MobilePositionSettings {
-  final double? topVisible;
-  final double? topInvisible;
+  final double? topOnAppearance;
+  final double? topOnDissapear;
   final double? left;
   final double? right;
-  final double? bottomVisible;
-  final double? bottomInvisible;
+  final double? bottomOnAppearance;
+  final double? bottomOnDissapear;
 
   const MobilePositionSettings({
-    this.topVisible,
-    this.topInvisible,
+    this.topOnAppearance,
+    this.topOnDissapear,
     this.left,
     this.right,
-    this.bottomVisible,
-    this.bottomInvisible,
+    this.bottomOnAppearance,
+    this.bottomOnDissapear,
   });
 }

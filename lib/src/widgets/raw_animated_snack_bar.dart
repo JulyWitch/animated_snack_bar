@@ -104,10 +104,10 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
     } else {
       if (widget.mobileSnackBarPosition == MobileSnackBarPosition.top) {
         if (isVisible) {
-          return (widget.mobilePositionSettings?.topVisible ??
-              70) + widget.getInitialDy();
+          return (widget.mobilePositionSettings?.topOnAppearance ?? 70) +
+              widget.getInitialDy();
         } else {
-          return widget.mobilePositionSettings?.topInvisible ?? -100;
+          return widget.mobilePositionSettings?.topOnDissapear ?? -100;
         }
       } else if (widget.mobileSnackBarPosition ==
           MobileSnackBarPosition.bottom) {
@@ -143,10 +143,10 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
       } else if (widget.mobileSnackBarPosition ==
           MobileSnackBarPosition.bottom) {
         if (isVisible) {
-          return (widget.mobilePositionSettings?.bottomVisible ??
-              70) + widget.getInitialDy();
+          return (widget.mobilePositionSettings?.bottomOnAppearance ?? 70) +
+              widget.getInitialDy();
         } else {
-          return widget.mobilePositionSettings?.bottomInvisible ?? -100;
+          return widget.mobilePositionSettings?.bottomOnDissapear ?? -100;
         }
       }
     }
