@@ -1,4 +1,4 @@
-class RawAnimatedSnackBarPositionSettings {
+class MobilePositionSettings {
   final double? topVisible;
   final double? topInvisible;
   final double? left;
@@ -6,7 +6,7 @@ class RawAnimatedSnackBarPositionSettings {
   final double? bottomVisible;
   final double? bottomInvisible;
 
-  const RawAnimatedSnackBarPositionSettings({
+  const MobilePositionSettings({
     this.topVisible,
     this.topInvisible,
     this.left,

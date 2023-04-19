@@ -1,4 +1,4 @@
-import 'package:animated_snack_bar/src/settings/raw_animated_snackbar_position_settings.dart';
+import 'package:animated_snack_bar/src/settings/mobile_position_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:animated_snack_bar/src/types.dart';
@@ -43,19 +43,18 @@ class AnimatedSnackBar {
   ///
   /// Defaults to [ColumnSnackBarStrategy]
   final MultipleSnackBarStrategy snackBarStrategy;
-  
-  
+
   /// Do not use this settings for default behavior.
-  /// 
-  /// [RawAnimatedSnackBarPositionSettings.left], [RawAnimatedSnackBarPositionSettings.right]
-  /// Specifies the appearance of the snackbar for xy edges of screen 
-  /// 
-  /// [RawAnimatedSnackBarPositionSettings.topVisible], [RawAnimatedSnackBarPositionSettings.bottomVisible]
+  ///
+  /// [MobilePositionSettings.left], [MobilePositionSettings.right]
+  /// Specifies the appearance of the snackbar for xy edges of screen
+  ///
+  /// [MobilePositionSettings.topVisible], [MobilePositionSettings.bottomVisible]
   /// Specifies the appearance of the snackbar for dy edges of screen
-  /// 
-  /// [RawAnimatedSnackBarPositionSettings.topInvisible], [RawAnimatedSnackBarPositionSettings.bottomInvisible]
+  ///
+  /// [MobilePositionSettings.topInvisible], [MobilePositionSettings.bottomInvisible]
   /// Specifies the dissapearence of the snackbar for dy edges of screen
-  final RawAnimatedSnackBarPositionSettings? positionSettings;
+  final MobilePositionSettings? mobilePositionSettings;
 
   late final _SnackBarInfo info;
 
@@ -64,7 +63,7 @@ class AnimatedSnackBar {
     this.mobileSnackBarPosition = MobileSnackBarPosition.top,
     this.desktopSnackBarPosition = DesktopSnackBarPosition.bottomLeft,
     this.snackBarStrategy = const ColumnSnackBarStrategy(),
-    this.positionSettings,
+    this.mobilePositionSettings,
     required this.builder,
   });
 
@@ -159,7 +158,7 @@ class AnimatedSnackBar {
         child: builder.call(context),
         desktopSnackBarPosition: desktopSnackBarPosition,
         mobileSnackBarPosition: mobileSnackBarPosition,
-        positionSettings: positionSettings,
+        mobilePositionSettings: mobilePositionSettings,
       ),
     );
 
