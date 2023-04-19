@@ -82,7 +82,7 @@ class MaterialAnimatedSnackBar extends StatelessWidget {
                 children: [
                   Text(
                     messageText,
-                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: foregroundColor,
                         ),
                   ),

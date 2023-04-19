@@ -39,9 +39,24 @@ class AnimatedSnackBar {
   /// Should it be shown on them like column? use [ColumnSnackBarStrategy]
   /// Should it remove them? use [RemoveSnackBarStrategy]
   /// Should it just stack on them? use [StackSnackBarStrategy]
-  /// 
+  ///
   /// Defaults to [ColumnSnackBarStrategy]
   final MultipleSnackBarStrategy snackBarStrategy;
+  
+  
+  
+  /// [RawAnimatedSnackBarPositionSettings.left], [RawAnimatedSnackBarPositionSettings.right]
+  /// Specifies the appearance of the snackbar for xy edges of screen 
+  /// Do not use for defaults.
+  /// 
+  /// [RawAnimatedSnackBarPositionSettings.topVisible], [RawAnimatedSnackBarPositionSettings.bottomVisible]
+  /// Specifies the appearance of the snackbar for dy edges of screen
+  /// Do not use for defaults.
+  /// 
+  /// [RawAnimatedSnackBarPositionSettings.topInvisible], [RawAnimatedSnackBarPositionSettings.bottomInvisible]
+  /// Specifies the dissapearence of the snackbar for dy edges of screen
+  /// Do not use for defaults.
+  final RawAnimatedSnackBarPositionSettings? positionSettings;
 
   late final _SnackBarInfo info;
 
@@ -50,6 +65,7 @@ class AnimatedSnackBar {
     this.mobileSnackBarPosition = MobileSnackBarPosition.top,
     this.desktopSnackBarPosition = DesktopSnackBarPosition.bottomLeft,
     this.snackBarStrategy = const ColumnSnackBarStrategy(),
+    this.positionSettings,
     required this.builder,
   });
 
@@ -144,6 +160,7 @@ class AnimatedSnackBar {
         child: builder.call(context),
         desktopSnackBarPosition: desktopSnackBarPosition,
         mobileSnackBarPosition: mobileSnackBarPosition,
+        positionSettings: positionSettings,
       ),
     );
 

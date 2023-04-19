@@ -1,9 +1,28 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 Duration _opacityDuration = const Duration(milliseconds: 400);
+
+class RawAnimatedSnackBarPositionSettings {
+  final double? topVisible;
+  final double? topInvisible;
+  final double? left;
+  final double? right;
+  final double? bottomVisible;
+  final double? bottomInvisible;
+
+  const RawAnimatedSnackBarPositionSettings({
+    this.topVisible,
+    this.topInvisible,
+    this.left,
+    this.right,
+    this.bottomVisible,
+    this.bottomInvisible,
+  });
+}
 
 class RawAnimatedSnackBar extends StatefulWidget {
   const RawAnimatedSnackBar({
@@ -14,6 +33,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
     required this.mobileSnackBarPosition,
     required this.desktopSnackBarPosition,
     required this.getInitialDy,
+    this.positionSettings,
   }) : super(key: key);
 
   final Duration duration;
@@ -22,6 +42,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
   final MobileSnackBarPosition mobileSnackBarPosition;
   final DesktopSnackBarPosition desktopSnackBarPosition;
   final double Function() getInitialDy;
+  final RawAnimatedSnackBarPositionSettings? positionSettings;
 
   @override
   State<RawAnimatedSnackBar> createState() => RawAnimatedSnackBarState();
@@ -79,6 +100,14 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   }
 
   double? get top {
+    if (widget.positionSettings != null) {
+      if (isVisible) {
+        return widget.positionSettings!.topVisible ??
+            70 + widget.getInitialDy();
+      } else {
+        return widget.positionSettings!.topInvisible ?? -100;
+      }
+    }
     if (isDesktop) {
       switch (widget.desktopSnackBarPosition) {
         case DesktopSnackBarPosition.topCenter:
@@ -114,6 +143,16 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   }
 
   double? get bottom {
+    
+    if (widget.positionSettings != null) {
+      if (isVisible) {
+        return widget.positionSettings!.bottomVisible ??
+            70 + widget.getInitialDy();
+      } else {
+        return widget.positionSettings!.bottomInvisible ?? -100;
+      }
+    }
+
     if (isDesktop) {
       switch (widget.desktopSnackBarPosition) {
         case DesktopSnackBarPosition.topCenter:
@@ -149,6 +188,9 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   }
 
   double? get left {
+    if (widget.positionSettings?.left != null) {
+      return widget.positionSettings?.left;
+    }
     if (isDesktop) {
       switch (widget.desktopSnackBarPosition) {
         case DesktopSnackBarPosition.bottomLeft:
@@ -171,6 +213,9 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   }
 
   double? get right {
+    if (widget.positionSettings?.right != null) {
+      return widget.positionSettings?.right;
+    }
     if (isDesktop) {
       switch (widget.desktopSnackBarPosition) {
         case DesktopSnackBarPosition.bottomLeft:
