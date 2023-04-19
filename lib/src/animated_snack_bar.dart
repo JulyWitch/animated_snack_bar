@@ -44,18 +44,16 @@ class AnimatedSnackBar {
   final MultipleSnackBarStrategy snackBarStrategy;
   
   
-  
+  /// Do not use this settings for default behavior.
+  /// 
   /// [RawAnimatedSnackBarPositionSettings.left], [RawAnimatedSnackBarPositionSettings.right]
   /// Specifies the appearance of the snackbar for xy edges of screen 
-  /// Do not use for defaults.
   /// 
   /// [RawAnimatedSnackBarPositionSettings.topVisible], [RawAnimatedSnackBarPositionSettings.bottomVisible]
   /// Specifies the appearance of the snackbar for dy edges of screen
-  /// Do not use for defaults.
   /// 
   /// [RawAnimatedSnackBarPositionSettings.topInvisible], [RawAnimatedSnackBarPositionSettings.bottomInvisible]
   /// Specifies the dissapearence of the snackbar for dy edges of screen
-  /// Do not use for defaults.
   final RawAnimatedSnackBarPositionSettings? positionSettings;
 
   late final _SnackBarInfo info;
