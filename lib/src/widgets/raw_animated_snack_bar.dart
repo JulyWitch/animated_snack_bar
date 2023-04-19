@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 
-import '../settings/raw_animated_snackbar_position_settings.dart';
-
 Duration _opacityDuration = const Duration(milliseconds: 400);
 
 
