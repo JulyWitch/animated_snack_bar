@@ -45,7 +45,8 @@ class AnimatedSnackBar {
   final MultipleSnackBarStrategy snackBarStrategy;
 
   /// Do not use this settings for default behavior.
-  ///
+  /// Settings aplies only on default [AnimatedSnackBar] constructor
+  /// 
   /// [MobilePositionSettings.left], [MobilePositionSettings.right]
   /// Specifies the appearance of the snackbar for xy edges of screen
   ///
