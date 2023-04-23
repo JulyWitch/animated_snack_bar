@@ -1,4 +1,3 @@
-import 'package:animated_snack_bar/src/settings/mobile_position_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:animated_snack_bar/src/types.dart';
