@@ -49,13 +49,17 @@ class AnimatedSnackBar {
   /// 
   /// [MobilePositionSettings.left], [MobilePositionSettings.right]
   /// Specifies the appearance of the snackbar for xy edges of screen
+  /// for any [MobileSnackBarPosition]
   ///
-  /// [MobilePositionSettings.topOnAppearance], [MobilePositionSettings.bottomOnAppearance]
+  /// [MobilePositionSettings.topOnAppearance], [MobilePositionSettings.topOnDissapear]
   /// Specifies the appearance of the snackbar for dy edges of screen
+  /// settings for [MobileSnackBarPosition.top]
   ///
-  /// [MobilePositionSettings.topOnDissapear], [MobilePositionSettings.bottomOnDissapear]
+  /// [MobilePositionSettings.bottomOnAppearance], [MobilePositionSettings.bottomOnDissapear]
   /// Specifies the dissapearence of the snackbar for dy edges of screen
-  final MobilePositionSettings? mobilePositionSettings;
+  /// settings for [MobileSnackBarPosition.bottom]
+  /// 
+  final MobilePositionSettings mobilePositionSettings;
 
   late final _SnackBarInfo info;
 
@@ -64,7 +68,7 @@ class AnimatedSnackBar {
     this.mobileSnackBarPosition = MobileSnackBarPosition.top,
     this.desktopSnackBarPosition = DesktopSnackBarPosition.bottomLeft,
     this.snackBarStrategy = const ColumnSnackBarStrategy(),
-    this.mobilePositionSettings,
+    this.mobilePositionSettings = const MobilePositionSettings(),
     required this.builder,
   });
 

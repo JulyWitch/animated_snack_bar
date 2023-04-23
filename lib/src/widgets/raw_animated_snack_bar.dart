@@ -15,7 +15,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
     required this.mobileSnackBarPosition,
     required this.desktopSnackBarPosition,
     required this.getInitialDy,
-    this.mobilePositionSettings,
+    required this.mobilePositionSettings,
   }) : super(key: key);
 
   final Duration duration;
@@ -24,7 +24,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
   final MobileSnackBarPosition mobileSnackBarPosition;
   final DesktopSnackBarPosition desktopSnackBarPosition;
   final double Function() getInitialDy;
-  final MobilePositionSettings? mobilePositionSettings;
+  final MobilePositionSettings mobilePositionSettings;
 
   @override
   State<RawAnimatedSnackBar> createState() => RawAnimatedSnackBarState();
@@ -104,10 +104,10 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
     } else {
       if (widget.mobileSnackBarPosition == MobileSnackBarPosition.top) {
         if (isVisible) {
-          return (widget.mobilePositionSettings?.topOnAppearance ?? 70) +
+          return widget.mobilePositionSettings.topOnAppearance +
               widget.getInitialDy();
         } else {
-          return widget.mobilePositionSettings?.topOnDissapear ?? -100;
+          return widget.mobilePositionSettings.topOnDissapear;
         }
       } else if (widget.mobileSnackBarPosition ==
           MobileSnackBarPosition.bottom) {
@@ -143,10 +143,10 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
       } else if (widget.mobileSnackBarPosition ==
           MobileSnackBarPosition.bottom) {
         if (isVisible) {
-          return (widget.mobilePositionSettings?.bottomOnAppearance ?? 70) +
+          return (widget.mobilePositionSettings.bottomOnAppearance) +
               widget.getInitialDy();
         } else {
-          return widget.mobilePositionSettings?.bottomOnDissapear ?? -100;
+          return widget.mobilePositionSettings.bottomOnDissapear;
         }
       }
     }
@@ -172,7 +172,7 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
           throw UnimplementedError();
       }
     }
-    return widget.mobilePositionSettings?.left ?? 35;
+    return widget.mobilePositionSettings.left;
   }
 
   double? get right {
@@ -194,7 +194,7 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
           throw UnimplementedError();
       }
     }
-    return widget.mobilePositionSettings?.right ?? 35;
+    return widget.mobilePositionSettings.right;
   }
 
   double? get width {
