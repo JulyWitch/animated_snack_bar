@@ -103,13 +103,13 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
               children: [
                 Text(
                   titleText,
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: titleColor,
                       ),
                 ),
                 Text(
                   messageText,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: Colors.white, fontWeight: FontWeight.w300),
                 ),
               ],

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
     required this.mobileSnackBarPosition,
     required this.desktopSnackBarPosition,
     required this.getInitialDy,
+    required this.mobilePositionSettings,
   }) : super(key: key);
 
   final Duration duration;
@@ -22,6 +24,7 @@ class RawAnimatedSnackBar extends StatefulWidget {
   final MobileSnackBarPosition mobileSnackBarPosition;
   final DesktopSnackBarPosition desktopSnackBarPosition;
   final double Function() getInitialDy;
+  final MobilePositionSettings mobilePositionSettings;
 
   @override
   State<RawAnimatedSnackBar> createState() => RawAnimatedSnackBarState();
@@ -101,9 +104,10 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
     } else {
       if (widget.mobileSnackBarPosition == MobileSnackBarPosition.top) {
         if (isVisible) {
-          return 70 + widget.getInitialDy();
+          return widget.mobilePositionSettings.topOnAppearance +
+              widget.getInitialDy();
         } else {
-          return -100;
+          return widget.mobilePositionSettings.topOnDissapear;
         }
       } else if (widget.mobileSnackBarPosition ==
           MobileSnackBarPosition.bottom) {
@@ -139,9 +143,10 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
       } else if (widget.mobileSnackBarPosition ==
           MobileSnackBarPosition.bottom) {
         if (isVisible) {
-          return 70 + widget.getInitialDy();
+          return (widget.mobilePositionSettings.bottomOnAppearance) +
+              widget.getInitialDy();
         } else {
-          return -100;
+          return widget.mobilePositionSettings.bottomOnDissapear;
         }
       }
     }
@@ -167,7 +172,7 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
           throw UnimplementedError();
       }
     }
-    return 35;
+    return widget.mobilePositionSettings.left;
   }
 
   double? get right {
@@ -189,7 +194,7 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
           throw UnimplementedError();
       }
     }
-    return 35;
+    return widget.mobilePositionSettings.right;
   }
 
   double? get width {
