@@ -48,12 +48,20 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  AnimatedSnackBar.material('This a snackbar with info type',
-                          type: AnimatedSnackBarType.info,
-                          mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-                          desktopSnackBarPosition:
-                              DesktopSnackBarPosition.bottomLeft)
-                      .show(context);
+                  AnimatedSnackBar.material(
+                    'This a snackbar with info type',
+                    type: AnimatedSnackBarType.info,
+                    mobilePositionSettings: const MobilePositionSettings(
+                      topOnAppearance: 100,
+                      // topOnDissapear: 50,
+                      // bottomOnAppearance: 100,
+                      // bottomOnDissapear: 50,
+                      // left: 20,
+                      // right: 70,
+                    ),
+                    mobileSnackBarPosition: MobileSnackBarPosition.top,
+                    desktopSnackBarPosition: DesktopSnackBarPosition.bottomLeft,
+                  ).show(context);
                 },
                 child: const Text("Info"),
               ),

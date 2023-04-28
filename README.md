@@ -63,9 +63,7 @@ AnimatedSnackBar.rectangle(
   'This is a success snack bar',
   type: AnimatedSnackBarType.success,
   brightness: Brightness.dark,
-).show(
-  context,
-);
+).show(context);
 ```
 
 * Show a custom snackbar
@@ -90,6 +88,22 @@ AnimatedSnackBar.material(
     type: AnimatedSnackBarType.info,
     mobileSnackBarPosition: MobileSnackBarPosition.bottom, // Position of snackbar on mobile devices
     desktopSnackBarPosition: DesktopSnackBarPosition.topRight, // Position of snackbar on desktop devices
+).show(context);
+```
+
+* Change snack bar position for mobile
+```dart
+AnimatedSnackBar.material(
+    'This a snackbar with info type',
+    type: AnimatedSnackBarType.info,
+    mobilePositionSettings: const MobilePositionSettings(
+      topOnAppearance: 100,
+      // topOnDissapear: 50,
+      // bottomOnAppearance: 100,
+      // bottomOnDissapear: 50,
+      // left: 20,
+      // right: 70,
+    ),
 ).show(context);
 ```
 
