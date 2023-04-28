@@ -45,7 +45,7 @@ class AnimatedSnackBar {
 
   /// Do not use this settings for default behavior.
   /// Settings aplies only on default [AnimatedSnackBar] constructor
-  /// 
+  ///
   /// [MobilePositionSettings.left], [MobilePositionSettings.right]
   /// Specifies the appearance of the snackbar for xy edges of screen
   /// for any [MobileSnackBarPosition]
@@ -57,7 +57,7 @@ class AnimatedSnackBar {
   /// [MobilePositionSettings.bottomOnAppearance], [MobilePositionSettings.bottomOnDissapear]
   /// Specifies the dissapearence of the snackbar for dy edges of screen
   /// settings for [MobileSnackBarPosition.bottom]
-  /// 
+  ///
   final MobilePositionSettings mobilePositionSettings;
 
   late final _SnackBarInfo info;
@@ -82,6 +82,8 @@ class AnimatedSnackBar {
     MobileSnackBarPosition mobileSnackBarPosition = MobileSnackBarPosition.top,
     Duration duration = const Duration(seconds: 8),
     MultipleSnackBarStrategy snackBarStrategy = const ColumnSnackBarStrategy(),
+    MobilePositionSettings mobilePositionSettings =
+        const MobilePositionSettings(),
   }) {
     final WidgetBuilder builder = ((context) {
       return MaterialAnimatedSnackBar(
@@ -97,6 +99,7 @@ class AnimatedSnackBar {
       snackBarStrategy: snackBarStrategy,
       desktopSnackBarPosition: desktopSnackBarPosition,
       mobileSnackBarPosition: mobileSnackBarPosition,
+      mobilePositionSettings: mobilePositionSettings,
     );
   }
 
@@ -112,6 +115,8 @@ class AnimatedSnackBar {
     Duration duration = const Duration(seconds: 8),
     Brightness? brightness,
     MultipleSnackBarStrategy snackBarStrategy = const ColumnSnackBarStrategy(),
+    MobilePositionSettings mobilePositionSettings =
+        const MobilePositionSettings(),
   }) {
     final WidgetBuilder builder = ((context) {
       return RectangleAnimatedSnackBar(
@@ -128,6 +133,7 @@ class AnimatedSnackBar {
       builder: builder,
       desktopSnackBarPosition: desktopSnackBarPosition,
       mobileSnackBarPosition: mobileSnackBarPosition,
+      mobilePositionSettings: mobilePositionSettings,
     );
   }
 
