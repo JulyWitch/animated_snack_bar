@@ -1,3 +1,6 @@
+## 0.3.1
+
+* Add: MobilePositionSettings to change position of snack bar
 
 ## 0.3.0
 
