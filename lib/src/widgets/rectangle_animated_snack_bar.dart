@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../types.dart';
 
 const _infoBackgroundColor = Color.fromRGBO(85, 85, 238, 1);
-const _errorBackgrounColor = Color.fromRGBO(255, 0, 0, 1);
+const _errorBackgroundColor = Color.fromRGBO(255, 0, 0, 1);
 const _successBackgroundColor = Color.fromRGBO(99, 142, 90, 1);
 const _warningBackgroundColor = Color.fromRGBO(232, 145, 72, 1);
 
@@ -16,6 +16,11 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
     required this.messageText,
     required this.type,
     required this.brightness,
+    this.titleTextStyle,
+    this.messageTextStyle,
+    this.iconData,
+    this.foregroundColor,
+    this.backgroundColor,
   }) : super(key: key);
 
   final String titleText;
@@ -23,7 +28,13 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
   final Brightness brightness;
   final AnimatedSnackBarType type;
 
-  Color get primary {
+  final TextStyle? titleTextStyle;
+  final TextStyle? messageTextStyle;
+  final IconData? iconData;
+  final Color? foregroundColor;
+  final Color? backgroundColor;
+
+  Color? get primary {
     if (brightness == Brightness.dark) {
       return _darkColor;
     }
@@ -31,13 +42,13 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
     return typeColor;
   }
 
-  Color get typeColor {
+  Color? get typeColor {
     switch (type) {
       case AnimatedSnackBarType.info:
         return _infoBackgroundColor;
 
       case AnimatedSnackBarType.error:
-        return _errorBackgrounColor;
+        return _errorBackgroundColor;
 
       case AnimatedSnackBarType.success:
         return _successBackgroundColor;
@@ -50,7 +61,7 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
     }
   }
 
-  IconData get iconData {
+  IconData? get _iconData {
     switch (type) {
       case AnimatedSnackBarType.info:
         return Icons.info_outline;
@@ -69,7 +80,7 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
     }
   }
 
-  Color get titleColor {
+  Color? get titleColor {
     if (brightness == Brightness.dark) {
       return typeColor;
     }
@@ -81,7 +92,7 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
       decoration: BoxDecoration(
-        color: primary,
+        color: backgroundColor ?? primary,
       ),
       child: Row(
         children: [
@@ -92,8 +103,8 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
               color: Colors.white,
             ),
             child: Icon(
-              iconData,
-              color: typeColor,
+              iconData ?? _iconData,
+              color: foregroundColor ?? typeColor,
             ),
           ),
           const SizedBox(width: 10),
@@ -103,14 +114,16 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
               children: [
                 Text(
                   titleText,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: titleColor,
-                      ),
+                  style: titleTextStyle ??
+                      Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: titleColor,
+                          ),
                 ),
                 Text(
                   messageText,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.w300),
+                  style: messageTextStyle ??
+                      Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.w300),
                 ),
               ],
             ),

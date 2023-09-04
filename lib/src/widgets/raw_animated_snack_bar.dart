@@ -16,6 +16,8 @@ class RawAnimatedSnackBar extends StatefulWidget {
     required this.desktopSnackBarPosition,
     required this.getInitialDy,
     required this.mobilePositionSettings,
+    required this.animationDuration,
+    required this.animationCurve,
   }) : super(key: key);
 
   final Duration duration;
@@ -25,6 +27,8 @@ class RawAnimatedSnackBar extends StatefulWidget {
   final DesktopSnackBarPosition desktopSnackBarPosition;
   final double Function() getInitialDy;
   final MobilePositionSettings mobilePositionSettings;
+  final Duration animationDuration;
+  final Curve animationCurve;
 
   @override
   State<RawAnimatedSnackBar> createState() => RawAnimatedSnackBarState();
@@ -35,8 +39,6 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   bool removed = false;
 
   double opacity = 1;
-
-  final duration = const Duration(milliseconds: 400);
 
   final GlobalKey positionedKey = GlobalKey();
 
@@ -211,7 +213,8 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
   Widget build(BuildContext context) {
     return AnimatedPositioned(
       key: positionedKey,
-      duration: duration,
+      duration: widget.animationDuration,
+      curve: widget.animationCurve,
       top: top,
       left: left,
       right: right,

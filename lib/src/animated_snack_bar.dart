@@ -60,6 +60,12 @@ class AnimatedSnackBar {
   ///
   final MobilePositionSettings mobilePositionSettings;
 
+  /// Duration of the animation
+  final Duration animationDuration;
+
+  /// Curve of the animation
+  final Curve animationCurve;
+
   late final _SnackBarInfo info;
 
   AnimatedSnackBar({
@@ -68,6 +74,8 @@ class AnimatedSnackBar {
     this.desktopSnackBarPosition = DesktopSnackBarPosition.bottomLeft,
     this.snackBarStrategy = const ColumnSnackBarStrategy(),
     this.mobilePositionSettings = const MobilePositionSettings(),
+    this.animationDuration = const Duration(milliseconds: 400),
+    this.animationCurve = Curves.easeInOut,
     required this.builder,
   });
 
@@ -84,11 +92,13 @@ class AnimatedSnackBar {
     MultipleSnackBarStrategy snackBarStrategy = const ColumnSnackBarStrategy(),
     MobilePositionSettings mobilePositionSettings =
         const MobilePositionSettings(),
+    Duration animationDuration = const Duration(milliseconds: 400),
+    Curve animationCurve = Curves.easeInOut,
   }) {
     final WidgetBuilder builder = ((context) {
       return MaterialAnimatedSnackBar(
         type: type,
-        borderRadius: borderRadius ?? defaultBorderRadius,
+        borderRadius: borderRadius,
         messageText: messageText,
       );
     });
@@ -100,6 +110,8 @@ class AnimatedSnackBar {
       desktopSnackBarPosition: desktopSnackBarPosition,
       mobileSnackBarPosition: mobileSnackBarPosition,
       mobilePositionSettings: mobilePositionSettings,
+      animationDuration: animationDuration,
+      animationCurve: animationCurve,
     );
   }
 
@@ -117,6 +129,8 @@ class AnimatedSnackBar {
     MultipleSnackBarStrategy snackBarStrategy = const ColumnSnackBarStrategy(),
     MobilePositionSettings mobilePositionSettings =
         const MobilePositionSettings(),
+    Duration animationDuration = const Duration(milliseconds: 400),
+    Curve animationCurve = Curves.easeInOut,
   }) {
     final WidgetBuilder builder = ((context) {
       return RectangleAnimatedSnackBar(
@@ -134,6 +148,8 @@ class AnimatedSnackBar {
       desktopSnackBarPosition: desktopSnackBarPosition,
       mobileSnackBarPosition: mobileSnackBarPosition,
       mobilePositionSettings: mobilePositionSettings,
+      animationDuration: animationDuration,
+      animationCurve: animationCurve,
     );
   }
 
@@ -169,6 +185,8 @@ class AnimatedSnackBar {
         desktopSnackBarPosition: desktopSnackBarPosition,
         mobileSnackBarPosition: mobileSnackBarPosition,
         mobilePositionSettings: mobilePositionSettings,
+        animationDuration: animationDuration,
+        animationCurve: animationCurve,
       ),
     );
 
