@@ -8,11 +8,11 @@ A Flutter package to show beautiful animated snackbars directly using overlay.
 
 ![](https://github.com/JulyWitch/animated_snack_bar/blob/master/files/material.gif?raw=true)
 
-<img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/material-info.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/material-success.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/material-warning.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/material-error.png" height="600">  
+<img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/material-info.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/material-success.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/material-warning.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/material-error.png" height="600">
 
 - Colorized rectangle
 
-<img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/colorized-info.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/colorized-success.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/colorized-warning.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/colorized-error.png" height="600">  
+<img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/colorized-info.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/colorized-success.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/colorized-warning.png" height="600"> <img src="https://github.com/JulyWitch/animated_snack_bar/raw/master/files/colorized-error.png" height="600">
 
 - Dark rectangle
 
@@ -25,7 +25,8 @@ Add package to pubspec.yaml
 ```bash
 flutter pub add animated_snack_bar
 ```
-Import the package 
+
+Import the package
 
 ```dart
 import 'package:animated_snack_bar/animated_snack_bar.dart';
@@ -33,7 +34,7 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 ## Usage
 
-* Show material ui snackbar
+- Show material ui snackbar
 
 ```dart
 AnimatedSnackBar.material(
@@ -42,7 +43,7 @@ AnimatedSnackBar.material(
 ).show(context);
 ```
 
-* Show colorized rectangle snackbar
+- Show colorized rectangle snackbar
 
 ```dart
 AnimatedSnackBar.rectangle(
@@ -55,7 +56,7 @@ AnimatedSnackBar.rectangle(
 );
 ```
 
-* Show dark rectangle snackbar
+- Show dark rectangle snackbar
 
 ```dart
 AnimatedSnackBar.rectangle(
@@ -66,7 +67,33 @@ AnimatedSnackBar.rectangle(
 ).show(context);
 ```
 
-* Show a custom snackbar
+- Remove a snackbar
+
+```dart
+final snackbar = AnimatedSnackBar(
+    builder: ((context) {
+        return Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.amber,
+            height: 50,
+            child: const Text('A custom snackbar'),
+        );
+    }),
+);
+snackbar.show(context);
+
+snackbar.remove()
+```
+
+- Remove all snackbars
+
+```dart
+AnimatedSnackBar.removeAll();
+```
+
+- Show
+
+- Show a custom snackbar
 
 ```dart
 AnimatedSnackBar(
@@ -81,7 +108,7 @@ AnimatedSnackBar(
 ).show(context);
 ```
 
-* Show a custom snackbar with MaterialAnimatedSnackBar content
+- Show a custom snackbar with MaterialAnimatedSnackBar content
 
 ```dart
 AnimatedSnackBar(
@@ -100,7 +127,8 @@ AnimatedSnackBar(
 ).show(context);
 ```
 
-* Changning snackbar pushing position
+- Changning snackbar pushing position
+
 ```dart
 AnimatedSnackBar.material(
     'This a snackbar with info type',
@@ -110,7 +138,8 @@ AnimatedSnackBar.material(
 ).show(context);
 ```
 
-* Change snack bar position for mobile
+- Change snack bar position for mobile
+
 ```dart
 AnimatedSnackBar.material(
     'This a snackbar with info type',
@@ -130,6 +159,7 @@ AnimatedSnackBar.material(
 
 You can pass `snackBarStrategy` as a paramter to determine what should snack bar do
 with snackbars which came before it.
+
 - Should it be shown on them like column? use `ColumnSnackBarStrategy`
 - Should it remove them? use `RemoveSnackBarStrategy`
 - Should it just stack on them? use `StackSnackBarStrategy`
