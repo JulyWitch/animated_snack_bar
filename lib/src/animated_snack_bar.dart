@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:animated_snack_bar/src/types.dart';
 import 'package:animated_snack_bar/src/widgets/material_animated_snack_bar.dart';
+import 'package:flutter/material.dart';
 
 import 'widgets/raw_animated_snack_bar.dart';
 import 'widgets/rectangle_animated_snack_bar.dart';
@@ -153,27 +152,22 @@ class AnimatedSnackBar {
     );
   }
 
-  void remove() {
-    if (!info.removed) {
-      info.removed = true;
-      info.entry.remove();
-    }
+  void remove([bool purge = true]) {
+    if (info.removed) return;
+    if (purge) _snackBars.remove(this);
+    info.removed = true;
+    info.entry.remove();
   }
 
   /// This method will create an overlay for your snack bar
   /// and insert it to the overlay entries of navigator.
-  Future<void> show(BuildContext context) async {
+  void show(BuildContext context) {
     final overlay = Navigator.of(context).overlay!;
 
     info = _SnackBarInfo(
       key: GlobalKey<RawAnimatedSnackBarState>(),
       createdAt: DateTime.now(),
     );
-
-    void remove() {
-      this.remove();
-      _snackBars.remove(this);
-    }
 
     info.entry = OverlayEntry(
       builder: (_) => RawAnimatedSnackBar(
@@ -197,8 +191,13 @@ class AnimatedSnackBar {
     );
 
     _snackBars = snackBarStrategy.onAdd(_snackBars, this);
+  }
 
-    await Future.delayed(duration);
+  static void removeAll() {
+    for (var e in _snackBars) {
+      e.remove(false);
+    }
+    _snackBars.removeWhere((element) => true);
   }
 }
 

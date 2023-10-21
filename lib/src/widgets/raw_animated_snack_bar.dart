@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:flutter/material.dart';
-
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:flutter/material.dart';
 
 Duration _opacityDuration = const Duration(milliseconds: 400);
 
@@ -57,18 +56,18 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() => isVisible = true);
+    });
+    final fadeOutDuration = Duration(
+        milliseconds:
+            (widget.duration.inMilliseconds / 4).clamp(100, 2000).toInt());
     Future.delayed(
-      const Duration(milliseconds: 100),
-      () {
-        setState(() => isVisible = true);
-      },
-    );
-    Future.delayed(
-      Duration(milliseconds: widget.duration.inMilliseconds - 2000),
+      widget.duration - fadeOutDuration,
       () {
         if (mounted) {
           setState(() => isVisible = false);
-          Future.delayed(const Duration(seconds: 2), () {
+          Future.delayed(fadeOutDuration, () {
             remove();
           });
         }
@@ -146,7 +145,8 @@ class RawAnimatedSnackBarState extends State<RawAnimatedSnackBar> {
           MobileSnackBarPosition.bottom) {
         if (isVisible) {
           return (widget.mobilePositionSettings.bottomOnAppearance) +
-              widget.getInitialDy();
+              widget.getInitialDy() +
+              MediaQuery.viewInsetsOf(context).bottom;
         } else {
           return widget.mobilePositionSettings.bottomOnDissapear;
         }

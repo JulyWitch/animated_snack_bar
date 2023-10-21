@@ -43,7 +43,18 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.all(20.0),
+                child: TextField(),
+              ),
               const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () {
+                  AnimatedSnackBar.removeAll();
+                },
+                child: const Text("Remove all"),
+              ),
+              const SizedBox(height: 40),
               const Text('Material UI'),
               const SizedBox(height: 10),
               ElevatedButton(
@@ -51,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   AnimatedSnackBar.material(
                     'This a snackbar with info type',
                     type: AnimatedSnackBarType.info,
+                    duration: const Duration(seconds: 1),
                     mobilePositionSettings: const MobilePositionSettings(
                       topOnAppearance: 100,
                       // topOnDissapear: 50,
@@ -68,13 +80,18 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  AnimatedSnackBar.material(
+                  final snackBar = AnimatedSnackBar.material(
                     'This a snackbar with info type and a very very very long text',
                     type: AnimatedSnackBarType.info,
                     mobileSnackBarPosition: MobileSnackBarPosition.bottom,
                     desktopSnackBarPosition: DesktopSnackBarPosition.bottomLeft,
                     snackBarStrategy: RemoveSnackBarStrategy(),
-                  ).show(context);
+                  );
+                  snackBar.show(context);
+
+                  Future.delayed(const Duration(seconds: 2), () {
+                    snackBar.remove();
+                  });
                 },
                 child: const Text("Long Info"),
               ),
