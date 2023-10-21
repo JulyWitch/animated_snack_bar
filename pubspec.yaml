@@ -1,6 +1,6 @@
 name: animated_snack_bar
 description: Easily show beautiful snack bars directly using overlays. Create custom snack bars and show them with awesome animations.
-version: 0.3.1
+version: 0.4.0
 homepage: https://github.com/JulyWitch
 repository: https://github.com/JulyWitch/animated_snack_bar
 
