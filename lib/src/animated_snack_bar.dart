@@ -116,27 +116,28 @@ class AnimatedSnackBar {
 
   /// Creates a rectangle style snack bar.
   /// Remember to call [show] method to show the snack bar.
-  factory AnimatedSnackBar.rectangle(
-    String titleText,
-    String messageText, {
-    required AnimatedSnackBarType type,
-    DesktopSnackBarPosition desktopSnackBarPosition =
-        DesktopSnackBarPosition.bottomLeft,
-    MobileSnackBarPosition mobileSnackBarPosition = MobileSnackBarPosition.top,
-    Duration duration = const Duration(seconds: 8),
-    Brightness? brightness,
-    MultipleSnackBarStrategy snackBarStrategy = const ColumnSnackBarStrategy(),
-    MobilePositionSettings mobilePositionSettings =
-        const MobilePositionSettings(),
-    Duration animationDuration = const Duration(milliseconds: 400),
-    Curve animationCurve = Curves.easeInOut,
-  }) {
+  factory AnimatedSnackBar.rectangle(String titleText, String messageText,
+      {required AnimatedSnackBarType type,
+      DesktopSnackBarPosition desktopSnackBarPosition =
+          DesktopSnackBarPosition.bottomLeft,
+      MobileSnackBarPosition mobileSnackBarPosition =
+          MobileSnackBarPosition.top,
+      Duration duration = const Duration(seconds: 8),
+      Brightness? brightness,
+      MultipleSnackBarStrategy snackBarStrategy =
+          const ColumnSnackBarStrategy(),
+      MobilePositionSettings mobilePositionSettings =
+          const MobilePositionSettings(),
+      Duration animationDuration = const Duration(milliseconds: 400),
+      Curve animationCurve = Curves.easeInOut,
+      Widget? actionButton}) {
     final WidgetBuilder builder = ((context) {
       return RectangleAnimatedSnackBar(
         titleText: titleText,
         messageText: messageText,
         type: type,
         brightness: brightness ?? Theme.of(context).brightness,
+        actionButton: actionButton,
       );
     });
 

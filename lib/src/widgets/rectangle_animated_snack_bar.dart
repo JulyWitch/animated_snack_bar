@@ -21,6 +21,7 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
     this.iconData,
     this.foregroundColor,
     this.backgroundColor,
+    this.actionButton,
   }) : super(key: key);
 
   final String titleText;
@@ -33,6 +34,7 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
   final IconData? iconData;
   final Color? foregroundColor;
   final Color? backgroundColor;
+  final Widget? actionButton;
 
   Color? get primary {
     if (brightness == Brightness.dark) {
@@ -125,6 +127,11 @@ class RectangleAnimatedSnackBar extends StatelessWidget {
                       Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.white, fontWeight: FontWeight.w300),
                 ),
+                if (actionButton != null)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [actionButton!],
+                  )
               ],
             ),
           )

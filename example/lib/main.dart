@@ -1,4 +1,5 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:example/action_button.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -207,6 +208,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 }),
                 child: const Text("Success"),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: (() {
+                  AnimatedSnackBar.rectangle('Info', 'Document downloaded',
+                          type: AnimatedSnackBarType.info,
+                          brightness: Brightness.light,
+                          actionButton: AcctionButon(
+                              text: 'Open',
+                              borderWidth: 2.0,
+                              icon: Icons.open_in_new,
+                              size: const Size(100, 10),
+                              onClick: () => print('Performing an action'),
+                              color: Colors.green[700]!,
+                              backgroundColor: Colors.white,
+                              overlayColor: Colors.grey[350]!))
+                      .show(
+                    context,
+                  );
+                }),
+                child: const Text("ActionButton"),
               ),
               const SizedBox(height: 10),
               ElevatedButton(
